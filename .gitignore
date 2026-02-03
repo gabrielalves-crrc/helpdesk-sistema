@@ -1,0 +1,9 @@
+# ARQUIVO SENSÍVEL - NÃO PODE IR PRO GITHUB!
+config.php
+
+# PASTA DE UPLOADS (se tiver arquivos grandes)
+uploads/
+
+# OUTRAS CONFIGURAÇÕES
+.env
+*.env
