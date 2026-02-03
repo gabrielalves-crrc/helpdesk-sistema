@@ -12,7 +12,7 @@ body {
 
 /* ================= TOPO ================= */
 .topbar {
-    background-image: linear-gradient(45deg, #ffffff 25%, #c6292e 55%);
+    background-image: linear-gradient(45deg, #ffffff 20%, #c6292e 40%);
     color: #fff;
     padding: 15px 30px;
     display: flex;
@@ -29,6 +29,8 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .btn-logout {
@@ -816,4 +818,103 @@ body.dark .comment.me {
 
 .ver-historico-btn:hover {
     color: #2a3d8a;
+}
+
+/* ===== STATS BAR NO TOPO ===== */
+.stats-bar {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin: 0 30px;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 15px;
+    background: rgb(16 16 16 / 52%);
+    border-radius: 50%;
+    transition: transform 0.2s;
+    width: 45px;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
+    background: rgb(0 0 0 / 60%);
+}
+
+.stat-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.stat-value.active {
+    color: #ff6b6b;
+    /* Vermelho para ativos */
+}
+
+.stat-value.in-progress {
+    color: #feca57;
+    /* Amarelo para em andamento */
+}
+
+.stat-value.resolved {
+    color: #1dd1a1;
+    /* Verde para resolvidos */
+}
+
+.stat-value.total {
+    color: #54a0ff;
+    /* Azul para total */
+}
+
+/* Responsivo para telas menores */
+@media (max-width: 1200px) {
+    .stats-bar {
+        gap: 10px;
+    }
+
+    .stat-item {
+        min-width: 70px;
+        padding: 5px 10px;
+    }
+
+    .stat-value {
+        font-size: 16px;
+    }
+}
+
+.all-stat-value {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.line-right::after {
+    content: "";
+    width: 1px;
+    height: 85px;
+    background-color: #4b4b4b36;
+    position: absolute;
+    right: -10px;
+}
+
+.line-right {
+    position: relative;
 }

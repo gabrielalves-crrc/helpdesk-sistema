@@ -51,9 +51,26 @@ $tickets = $stmt->fetchAll();
 
 ?>
 
+<?php
+// ===== CONTAGEM DE STATUS PARA O TOPO =====
+$contadores = $pdo->prepare("
+    SELECT 
+        SUM(CASE WHEN status IN ('aberto', 'em_andamento') THEN 1 ELSE 0 END) as ativos,
+        SUM(CASE WHEN status = 'fechado' THEN 1 ELSE 0 END) as resolvidos,
+        SUM(CASE WHEN status = 'em_andamento' THEN 1 ELSE 0 END) as em_andamento,
+        COUNT(*) as total
+    FROM tickets
+    " . ($_SESSION['role'] === 'user' ? " WHERE usuario_id = :user_id" : "") . "
+");
 
+if ($_SESSION['role'] === 'user') {
+    $contadores->execute([':user_id' => $_SESSION['user_id']]);
+} else {
+    $contadores->execute();
+}
 
-
+$stats = $contadores->fetch(PDO::FETCH_ASSOC);
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -102,11 +119,60 @@ $tickets = $stmt->fetchAll();
 
             <!-- TOPO -->
             <header class="topbar">
-                <div class="logo"><img src="uploads/logotipo-att.jpeg" alt="HelpDesk Logotipo"></div>
+                <div class="logo">
+                    <img src="uploads/logotipo-att.jpeg" alt="Logo" class="logo-img">
+                </div>
+
+                <div class="stats-bar">
+
+                    <div class="all-stat-value line-right">
+                        <div class="stat-item">
+                            <span class="stat-value in-progress"><?= $stats['em_andamento'] ?? 0 ?></span>
+                        </div>
+
+                        <div class="flex-stats">
+                            <span class="stat-label">Em andamento</span>
+                        </div>
+                    </div>
+
+                    <div class="all-stat-value line-right">
+                        <div class="stat-item">
+                            <span class="stat-value active"><?= $stats['ativos'] ?? 0 ?></span>
+                        </div>
+                        <div class="flex-stats">
+                            <span class="stat-label">Ativos</span>
+                        </div>
+                    </div>
+
+                    <div class="all-stat-value line-right">
+                        <div class="stat-item">
+                            <span class="stat-value resolved"><?= $stats['resolvidos'] ?? 0 ?></span>
+                        </div>
+
+                        <div class="flex-stats">
+                            <span class="stat-label">Resolvidos</span>
+                        </div>
+                    </div>
+
+                    <div class="all-stat-value">
+                        <div class="stat-item">
+
+                            <span class="stat-value total"><?= $stats['total'] ?? 0 ?></span>
+                        </div>
+                        <div class="flex-stats">
+                            <span class="stat-label">Total</span>
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="top-actions">
-                    <button id="toggleDark" class="dark-btn">🌙</button>
                     <span class="user">👤 <?= htmlspecialchars($_SESSION['username']) ?></span>
-                    <a href="logout.php" class="btn-logout">Sair</a>
+
+                    <div class="flex-section-top-actions">
+                        <button id="toggleDark" class="dark-btn">🌙</button>
+                        <a href="logout.php" class="btn-logout">Sair</a>
+                    </div>
                 </div>
             </header>
 
