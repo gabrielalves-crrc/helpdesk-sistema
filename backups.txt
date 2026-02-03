@@ -1,0 +1,32 @@
+# PASSO A: Ver o que mudou
+git status
+
+# PASSO B: Adicionar TUDO
+git add .
+
+# PASSO C: Commitar
+git commit -m "Mensagem clara do que fez"
+
+# PASSO D: Enviar pro GitHub
+git push
+-----------------------------------------------
+-----------------------------------------------
+2. PEGAR CÓDIGO ATUALIZADO (se mexer em outro PC):
+git pull
+-----------------------------------------------
+-----------------------------------------------
+3. VER HISTÓRICO:
+# Ver últimos commits
+git log --oneline
+
+# Ver mudanças específicas
+git diff
+-----------------------------------------------
+-----------------------------------------------
+
+Tecla	O que faz no visual
+
+Ctrl + '	Abre/fecha terminal
+Ctrl + Shift + G	Abre painel Git (ver mudanças)
+Ctrl + S	Salva arquivo atual
+Ctrl + Shift + P	Abre comandos (digite "git")
