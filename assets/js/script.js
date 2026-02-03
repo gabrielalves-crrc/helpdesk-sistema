@@ -65,3 +65,54 @@ if (searchInput) {
         });
     });
 }
+
+// ===== LEIA MAIS PARA DESCRIÇÕES LONGS =====
+function toggleDescricao(id) {
+    const descricao = document.getElementById('desc-' + id);
+    const botao = document.getElementById('btn-' + id);
+
+    if (descricao.classList.contains('expandido')) {
+        // Volta para o tamanho normal
+        descricao.classList.remove('expandido');
+        descricao.classList.add('cortado');
+        botao.textContent = 'Leia mais...';
+    } else {
+        // Expande completamente
+        descricao.classList.add('expandido');
+        descricao.classList.remove('cortado');
+        botao.textContent = 'Mostrar menos';
+    }
+}
+
+// Verifica quais textos precisam do botão "Leia mais"
+document.addEventListener('DOMContentLoaded', function () {
+    const descricoes = document.querySelectorAll('.desc-text');
+
+    descricoes.forEach(desc => {
+        // Se a altura natural for maior que 100px, precisa do botão
+        if (desc.scrollHeight > 100) {
+            desc.classList.add('cortado');
+            const id = desc.id.replace('desc-', '');
+            const botao = document.getElementById('btn-' + id);
+            if (botao) {
+                botao.style.display = 'inline-block';
+            }
+        }
+    });
+});
+
+// ===== TOGGLE HISTÓRICO COMPLETO =====
+function toggleHistorico(ticketId) {
+    const historico = document.getElementById('historico-' + ticketId);
+    const botao = document.getElementById('btn-historico-' + ticketId);
+
+    if (historico.style.display === 'none') {
+        // Mostra histórico completo
+        historico.style.display = 'block';
+        botao.textContent = 'Ocultar histórico';
+    } else {
+        // Esconde histórico completo
+        historico.style.display = 'none';
+        botao.textContent = 'Ver histórico completo';
+    }
+}

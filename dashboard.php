@@ -144,9 +144,22 @@ $tickets = $stmt->fetchAll();
                             </div>
 
                             <div class="ticket-desc">
-                                <p class="desc-text">
-                                    <?= nl2br(htmlspecialchars($ticket['descricao'])) ?>
+                                <?php
+                                $descricao = $ticket['descricao'];
+                                $descricaoHTML = nl2br(htmlspecialchars($descricao));
+                                $id = $ticket['id'];
+                                ?>
+
+                                <p class="desc-text" id="desc-<?= $id ?>">
+                                    <?= $descricaoHTML ?>
                                 </p>
+
+                                <button type="button"
+                                    class="leia-mais-btn"
+                                    id="btn-<?= $id ?>"
+                                    onclick="toggleDescricao(<?= $id ?>)">
+                                    Leia mais...
+                                </button>
                             </div>
 
                             <?php if ($_SESSION['role'] === 'admin'): ?>
@@ -223,30 +236,56 @@ $tickets = $stmt->fetchAll();
                             <?php endif; ?>
 
                             <!-- ===== HISTÓRICO ===== -->
+                            <!-- ===== HISTÓRICO ===== -->
                             <div class="history">
                                 <strong>Histórico</strong>
                                 <?php
                                 $hist = $pdo->prepare("
-                                    SELECT h.*, u.username
-                                    FROM ticket_history h
-                                    JOIN users u ON u.id = h.usuario_id
-                                    WHERE h.ticket_id = :id
-                                    ORDER BY h.criado_em ASC
-                                ");
+        SELECT h.*, u.username
+        FROM ticket_history h
+        JOIN users u ON u.id = h.usuario_id
+        WHERE h.ticket_id = :id
+        ORDER BY h.criado_em DESC
+    ");
                                 $hist->execute([':id' => $ticket['id']]);
                                 $historico = $hist->fetchAll();
+                                $totalHistorico = count($historico);
                                 ?>
 
                                 <?php if ($historico): ?>
-                                    <ul>
-                                        <?php foreach ($historico as $h): ?>
-                                            <li>
-                                                <?= $h['criado_em'] ?> —
-                                                <b><?= htmlspecialchars($h['username']) ?></b>:
-                                                <?= $h['status_anterior'] ?> → <?= $h['status_novo'] ?>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
+                                    <!-- ÚLTIMO HISTÓRICO (sempre visível) -->
+                                    <?php if (isset($historico[0])): ?>
+                                        <div class="ultimo-historico">
+                                            <span class="historico-data"><?= $historico[0]['criado_em'] ?></span> —
+                                            <b><?= htmlspecialchars($historico[0]['username']) ?></b>:
+                                            <span class="historico-mudanca">
+                                                <?= $historico[0]['status_anterior'] ?> → <?= $historico[0]['status_novo'] ?>
+                                            </span>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <!-- HISTÓRICO COMPLETO (escondido por padrão) -->
+                                    <?php if ($totalHistorico > 1): ?>
+                                        <div class="historico-completo" id="historico-<?= $ticket['id'] ?>" style="display: none;">
+                                            <ul>
+                                                <?php for ($i = 1; $i < $totalHistorico; $i++): ?>
+                                                    <li>
+                                                        <?= $historico[$i]['criado_em'] ?> —
+                                                        <b><?= htmlspecialchars($historico[$i]['username']) ?></b>:
+                                                        <?= $historico[$i]['status_anterior'] ?> → <?= $historico[$i]['status_novo'] ?>
+                                                    </li>
+                                                <?php endfor; ?>
+                                            </ul>
+                                        </div>
+
+                                        <!-- BOTÃO VER MAIS -->
+                                        <button type="button"
+                                            class="ver-historico-btn"
+                                            onclick="toggleHistorico(<?= $ticket['id'] ?>)"
+                                            id="btn-historico-<?= $ticket['id'] ?>">
+                                            Ver histórico completo (<?= $totalHistorico - 1 ?> mais)
+                                        </button>
+                                    <?php endif; ?>
                                 <?php else: ?>
                                     <em>Sem histórico</em>
                                 <?php endif; ?>

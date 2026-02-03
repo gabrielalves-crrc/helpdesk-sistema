@@ -149,6 +149,12 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    font-size: 23px;
+}
+
+.ticket-info b {
+    background-image: linear-gradient(45deg, #c9f2df 20%, transparent 94%);
+    padding: 3px;
 }
 
 /* ================= STATUS ================= */
@@ -183,8 +189,12 @@ body {
 }
 
 .ticket-desc {
-    margin: 10px 0;
-    font-size: 14px;
+    margin: 3vh 0;
+    padding: 3vh 5px;
+    background-color: #f1f1f1;
+    font-size: 12px;
+    border: 1px solid #1e293b38;
+    border-radius: 5px;
 }
 
 /* texto expandível */
@@ -217,6 +227,9 @@ body {
 .status-form select,
 .status-form button {
     padding: 6px 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    border: 1px solid #1e293b38;
 }
 
 /* ================= HISTÓRICO ================= */
@@ -558,13 +571,12 @@ body.dark .topbar {
 }
 
 .comment {
-    background: #95b5ff;
-    /* azul bem escuro */
-    border: 1px solid #1e293b;
-    border-radius: 8px;
+    background-color: #f1f1f1;
+    border: 1px solid #1e293b38;
+    border-radius: 5px;
     padding: 12px;
     margin-bottom: 10px;
-    color: #e5e7eb;
+    color: #000000;
 }
 
 body.dark .comment {
@@ -573,7 +585,7 @@ body.dark .comment {
 }
 
 .comment b {
-    color: #ffffff;
+    color: black;
     /* azul claro pro nome */
     font-size: 14px;
 }
@@ -587,7 +599,7 @@ body.dark .comment b {
 .comment p {
     margin: 6px 0;
     font-size: 15px;
-    color: #e5e7eb;
+    color: rgb(52, 52, 52);
     font-weight: 600;
 }
 
@@ -598,16 +610,15 @@ body.dark .comment p {
 .comment span {
     font-size: 12px;
     color: #ffffff;
-    background: #3b35f8;
+    background: #252d6b;
     padding: 5px;
-    border-radius: 9px;
-    box-shadow: -20px 11px 20px #0027ff38;
+    border-radius: 3px;
 }
 
 /* Comentário do próprio usuário */
 .comment.me {
-    background: #8394da;
-    border-left: 4px solid #1c3eff;
+    background: #c9f3de;
+    border-left: 4px solid #2b8eef;
 }
 
 body.dark .comment.me {
@@ -618,9 +629,9 @@ body.dark .comment.me {
 /* Campo de digitar comentário */
 .comment-form textarea {
     width: 100%;
-    background: #8793d6;
-    color: #ffffff;
-    border: 1px solid #212b3d;
+    background: #f1f1f1;
+    color: black;
+    border: 1px solid #1e293b38;
     border-radius: 6px;
     padding: 10px;
     resize: vertical;
@@ -628,7 +639,7 @@ body.dark .comment.me {
 }
 
 .comment-form textarea::placeholder {
-    color: #ffffff;
+    color: black;
 }
 
 .comment-form button {
@@ -679,3 +690,115 @@ body.dark .comment.me {
     text-decoration: underline;
 }
 
+/* ===== LEIA MAIS PARA DESCRIÇÕES ===== */
+.desc-text {
+    max-height: 100px;
+    /* Altura máxima */
+    overflow: hidden;
+    /* Esconde o que passar */
+    position: relative;
+    /* Para o gradiente */
+    transition: max-height 0.3s ease;
+    /* Animação suave */
+}
+
+.desc-text.expandido {
+    max-height: none !important;
+    /* Remove limite quando expandir */
+}
+
+/* Gradiente no final do texto cortado */
+.desc-text::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(transparent, white);
+    pointer-events: none;
+    display: none;
+    /* Só mostra quando texto for cortado */
+}
+
+.desc-text.cortado::after {
+    display: block;
+}
+
+/* Botão Leia mais */
+.leia-mais-btn {
+    background: #1f2f6e;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 12px;
+    display: none;
+    /* Escondido por padrão */
+}
+
+.leia-mais-btn:hover {
+    background: #2a3d8a;
+}
+
+/* ===== HISTÓRICO SIMPLIFICADO ===== */
+.ultimo-historico {
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    border-left: 3px solid #1f2f6e;
+}
+
+.historico-data {
+    color: #666;
+    font-size: 12px;
+}
+
+.historico-mudanca {
+    color: #1f2f6e;
+    font-weight: 500;
+}
+
+.historico-completo {
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.historico-completo ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.historico-completo li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+}
+
+.historico-completo li:last-child {
+    border-bottom: none;
+}
+
+.ver-historico-btn {
+    background: none;
+    border: none;
+    color: #1f2f6e;
+    cursor: pointer;
+    padding: 5px 0;
+    font-size: 12px;
+    text-decoration: underline;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.ver-historico-btn:hover {
+    color: #2a3d8a;
+}
