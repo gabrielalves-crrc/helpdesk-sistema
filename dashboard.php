@@ -62,6 +62,8 @@ $tickets = $stmt->fetchAll();
     <meta charset="UTF-8">
     <title>HelpDesk</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -100,7 +102,7 @@ $tickets = $stmt->fetchAll();
 
             <!-- TOPO -->
             <header class="topbar">
-                <div class="logo">HelpDesk</div>
+                <div class="logo"><img src="uploads/logotipo-att.jpeg" alt="HelpDesk Logotipo"></div>
                 <div class="top-actions">
                     <button id="toggleDark" class="dark-btn">🌙</button>
                     <span class="user">👤 <?= htmlspecialchars($_SESSION['username']) ?></span>
@@ -110,7 +112,7 @@ $tickets = $stmt->fetchAll();
 
             <!-- DASHBOARD -->
             <main class="dashboard">
-                <h2>Chamados</h2>
+                <h2>CHAMADOS</h2>
 
                 <?php if ($_SESSION['role'] === 'user'): ?>
                     <div style="margin-bottom:20px;">

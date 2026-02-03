@@ -2,17 +2,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: "Sansation", sans-serif;
 }
 
 body {
-    background: #f4f6f9;
+    background: #ffffff;
     color: #333;
 }
 
 /* ================= TOPO ================= */
 .topbar {
-    background: #1f3c88;
+    background-image: linear-gradient(45deg, #ffffff 25%, #c6292e 55%);
     color: #fff;
     padding: 15px 30px;
     display: flex;
@@ -20,9 +20,9 @@ body {
     align-items: center;
 }
 
-.logo {
-    font-size: 20px;
-    font-weight: bold;
+.logo img {
+    width: 200px;
+    object-fit: cover;
 }
 
 .top-actions {
@@ -53,7 +53,7 @@ body {
 /* ================= SIDEBAR ================= */
 .sidebar {
     width: 180px;
-    background: #1f2f6e;
+    background: #7c181b;
     color: #fff;
     transition: width 0.3s ease;
     overflow: hidden;
@@ -69,7 +69,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 15px;
-    background: #1b285f;
+    background: #c53433;
 }
 
 .logo-text {
@@ -124,6 +124,11 @@ body {
     flex-direction: column;
 }
 
+.logo {
+    padding: 1vh;
+    background-color: white;
+}
+
 /* ================= DASHBOARD ================= */
 .dashboard {
     max-width: 1100px;
@@ -133,6 +138,10 @@ body {
 
 .dashboard h2 {
     margin-bottom: 20px;
+    font-family: "Monoton", sans-serif;
+    font-size: 40px;
+    font-weight: unset;
+    letter-spacing: 3px;
 }
 
 /* ================= CARD DO CHAMADO ================= */
@@ -140,8 +149,8 @@ body {
     background: #fff;
     border-radius: 8px;
     padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    margin-bottom: 7vh;
+    box-shadow: 0 2px 13px rgb(0 0 0 / 39%);
 }
 
 .ticket-header {
@@ -153,8 +162,11 @@ body {
 }
 
 .ticket-info b {
-    background-image: linear-gradient(45deg, #c9f2df 20%, transparent 94%);
-    padding: 3px;
+    padding: 5px;
+    background-color: #2a2b68;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
 }
 
 /* ================= STATUS ================= */
@@ -643,7 +655,8 @@ body.dark .comment.me {
 }
 
 .comment-form button {
-    margin-top: 8px;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
     background: #2563eb;
     color: #fff;
     border: none;
@@ -679,6 +692,8 @@ body.dark .comment.me {
 .attachments {
     margin-top: 10px;
     font-size: 13px;
+    margin-bottom: 15px;
+    margin-left: 2vh;
 }
 
 .attachments a {
