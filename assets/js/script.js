@@ -116,3 +116,13 @@ function toggleHistorico(ticketId) {
         botao.textContent = 'Ver histórico completo';
     }
 }
+
+// Teste se o caminho está correto
+var img = new Image();
+img.src = '../../uploads/banner1.jpg';
+img.onload = function() {
+    console.log('✅ Imagem carregada com sucesso!');
+};
+img.onerror = function() {
+    console.log('❌ Imagem NÃO encontrada!');
+};

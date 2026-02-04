@@ -146,6 +146,37 @@ body {
     letter-spacing: 3px;
 }
 
+/* ===== BANNER ===== */
+.banner {
+    background-image: url(../../uploads/METRO.jpg);
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    /* AJUSTE AQUI para focar no "biquinho" */
+    background-position: top center;    /* Mostra o topo */
+    /* OU */
+    background-position: 50% 20%;      /* 50% horizontal, 20% vertical */
+    /* OU */
+    background-position: center 70%;   /* Centralizado horizontal, 30% vertical */
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Fallback se imagem não carregar */
+.banner:empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* .banner:empty::before {
+    content: "HELPDESK - SISTEMA DE CHAMADOS";
+} */
+
 /* ================= CARD DO CHAMADO ================= */
 .ticket-card {
     background: #fff;
@@ -260,7 +291,7 @@ body {
 
 /* ================= BOTÕES ================= */
 .btn-primary {
-    background: #2b3f8c;
+    background: #7c181b;
     color: #fff;
     padding: 8px 14px;
     text-decoration: none;
@@ -268,10 +299,16 @@ body {
     border: none;
     cursor: pointer;
     font-size: 14px;
+    transition: all 350ms linear;
 }
 
 .btn-primary:hover {
-    background: #1f2f6e;
+    transition: all 350ms linear;
+    background: #a6171c;
+}
+
+.login-card-footer {
+    margin-top: 2vh;
 }
 
 .btn-secondary {
@@ -299,11 +336,15 @@ body {
 
 /* ================= LOGIN ================= */
 .login-page {
-    background: linear-gradient(135deg, #2b3f8c, #1f2e6d);
+    background: linear-gradient(135deg, #c53433, #7c181b);
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.login-card img {
+    width: 150px;
 }
 
 .login-card {
@@ -317,7 +358,7 @@ body {
 
 .login-card h1 {
     margin: 0;
-    color: #2b3f8c;
+    color: black;
     font-size: 28px;
 }
 

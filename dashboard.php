@@ -175,9 +175,10 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </header>
-
+            <div class="banner"></div>
             <!-- DASHBOARD -->
             <main class="dashboard">
+
                 <h2>CHAMADOS</h2>
 
                 <?php if ($_SESSION['role'] === 'user'): ?>
