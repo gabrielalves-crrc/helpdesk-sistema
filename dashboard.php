@@ -124,17 +124,53 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                 <?php endif; ?>
             </nav>
 
+            <!-- ===== SELETOR DE IDIOMA SIMPLIFICADO ===== -->
             <div class="language-selector">
-                <div class="language-title">🌎 Traduzir página</div>
+                <div class="language-title"> 语言 / Idioma</div>
 
-                <!-- Widget do Google Tradutor -->
-                <div id="google_translate_element"></div>
+                <div class="lang-links">
+                    <a href="https://translate.google.com/translate?hl=zh-CN&sl=auto&tl=zh-CN&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                        target="_blank" class="lang-link">
+                        <div class="flex">
+                            <div class="flex-lenguage">
+                                <span class="flag">🇨🇳</span>
+                                <span>中文</span>
+                            </div>
+                            <div class="flex-icon">
+                                <img src="./uploads/ch2.png" alt="">
+                            </div>
+                        </div>
+                    </a>
 
-                <!-- Ou botões simples -->
-                <div class="simple-lang-btns">
-                    <button onclick="translatePage('pt')" class="lang-simple">🇧🇷 Português</button>
-                    <button onclick="translatePage('en')" class="lang-simple">🇺🇸 English</button>
-                    <button onclick="translatePage('zh-CN')" class="lang-simple">🇨🇳 中文</button>
+
+                    <a href="https://translate.google.com.br/translate?hl=pt-BR&sl=auto&tl=pt&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                        target="_blank" class="lang-link">
+
+                        <div class="flex">
+                            <div class="flex-lenguage">
+                                <span class="flag">🇧🇷</span>
+                                <span>Português</span>
+                            </div>
+                            <div class="flex-icon">
+                                <img src="./uploads/br2.png" alt="">
+                            </div>
+                        </div>
+
+                    </a>
+
+                    <a href="https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                        target="_blank" class="lang-link">
+
+                        <div class="flex">
+                            <div class="flex-lenguage">
+                                <span class="flag">🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="flex-icon">
+                                <img src="./uploads/en2.png" alt="">
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </aside>
