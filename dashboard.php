@@ -81,6 +81,17 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'pt',
+                includedLanguages: 'pt,en,zh-CN,es,fr',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 
 <body>
@@ -112,6 +123,20 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                     <a href="admin.php" class="menu-item">⚙️ Administração</a>
                 <?php endif; ?>
             </nav>
+
+            <div class="language-selector">
+                <div class="language-title">🌎 Traduzir página</div>
+
+                <!-- Widget do Google Tradutor -->
+                <div id="google_translate_element"></div>
+
+                <!-- Ou botões simples -->
+                <div class="simple-lang-btns">
+                    <button onclick="translatePage('pt')" class="lang-simple">🇧🇷 Português</button>
+                    <button onclick="translatePage('en')" class="lang-simple">🇺🇸 English</button>
+                    <button onclick="translatePage('zh-CN')" class="lang-simple">🇨🇳 中文</button>
+                </div>
+            </div>
         </aside>
 
         <!-- CONTEÚDO -->
