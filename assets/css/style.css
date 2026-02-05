@@ -31,6 +31,26 @@ body {
     gap: 15px;
     flex-direction: column;
     justify-content: center;
+    line-height: 35px;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+span.user img {
+    width: 40px;
+}
+
+span.user i {
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    color: #7b1e1e;
+    padding: 1vh;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #00000047;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-logout {
@@ -65,11 +85,17 @@ body {
     width: 70px;
 }
 
+span.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 /* header da sidebar */
 .sidebar-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 15px;
     background: #c53433;
 }
@@ -93,6 +119,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .menu a {
@@ -707,11 +734,12 @@ body.dark .topbar {
 }
 
 .comment {
-    background-color: #f1f1f1;
+    background-color: #ffc4a9;
     border: 1px solid #1e293b38;
     border-radius: 5px;
     padding: 12px;
     margin-bottom: 10px;
+    border-left: 4px solid #7b1e1e;
     color: #000000;
 }
 
@@ -1169,6 +1197,15 @@ div#google_translate_element {
     font-size: 18px;
 }
 
+.flex-icon-dark {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2vh;
+}
+
 .flex {
     display: flex;
     align-items: center;
@@ -1178,4 +1215,46 @@ div#google_translate_element {
 
 .flex-icon img {
     width: 40px;
+}
+
+/* ===== BOTÃO VOLTAR AO TOPO ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #1f2f6e;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(31, 47, 110, 0.3);
+    z-index: 9999 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: #2a3d8a;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(31, 47, 110, 0.4);
+}
+
+#backToTop {
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: red !important;
+    /* Para ver fácil */
+    z-index: 9999 !important;
 }

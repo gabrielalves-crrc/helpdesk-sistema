@@ -92,6 +92,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
         }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -104,25 +105,14 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
 
             </div>
 
-            <nav class="menu">
-                <a href="chamados.php" class="menu-item active">
-                    📩 Chamados
-                    <?php if ($totalAbertos > 0): ?>
-                        <span class="badge"><?= $totalAbertos ?></span>
-                    <?php endif; ?>
-                </a>
+            <div class="top-actions">
+                <span class="user"><i class="fa-regular fa-user"></i><?= htmlspecialchars($_SESSION['username']) ?></span>
 
-                <?php if ($_SESSION['role'] === 'user'): ?>
-                    <a href="novo_chamado.php">➕ Novo Chamado</a>
-                <?php endif; ?>
+                <div class="flex-section-top-actions">
+                    <a href="logout.php" class="btn-logout">Sair</a>
+                </div>
+            </div>
 
-                <a href="itens-enviados.php" class="menu-item">📤 Itens enviados</a>
-                <a href="lixeira.php" class="menu-item">🗑️ Lixeira</a>
-
-                <?php if ($_SESSION['role'] === 'admin'): ?>
-                    <a href="admin.php" class="menu-item">⚙️ Administração</a>
-                <?php endif; ?>
-            </nav>
 
             <!-- ===== SELETOR DE IDIOMA SIMPLIFICADO ===== -->
             <div class="language-selector">
@@ -172,6 +162,29 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                         </div>
                     </a>
                 </div>
+            </div>
+
+            <nav class="menu">
+                <a href="chamados.php" class="menu-item active">
+                    📩 Chamados
+                    <?php if ($totalAbertos > 0): ?>
+                        <span class="badge"><?= $totalAbertos ?></span>
+                    <?php endif; ?>
+                </a>
+
+                <?php if ($_SESSION['role'] === 'user'): ?>
+                    <a href="novo_chamado.php">➕ Novo Chamado</a>
+                <?php endif; ?>
+
+                <a href="itens-enviados.php" class="menu-item">📤 Itens enviados</a>
+                <a href="lixeira.php" class="menu-item">🗑️ Lixeira</a>
+
+                <?php if ($_SESSION['role'] === 'admin'): ?>
+                    <a href="admin.php" class="menu-item">⚙️ Administração</a>
+                <?php endif; ?>
+            </nav>
+            <div class="flex-icon-dark">
+                <button id="toggleDark" class="dark-btn">🌙</button>
             </div>
         </aside>
 
@@ -223,16 +236,6 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                         <div class="flex-stats">
                             <span class="stat-label">Total</span>
                         </div>
-                    </div>
-
-                </div>
-
-                <div class="top-actions">
-                    <span class="user">👤 <?= htmlspecialchars($_SESSION['username']) ?></span>
-
-                    <div class="flex-section-top-actions">
-                        <button id="toggleDark" class="dark-btn">🌙</button>
-                        <a href="logout.php" class="btn-logout">Sair</a>
                     </div>
                 </div>
             </header>
@@ -366,17 +369,16 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                             <?php endif; ?>
 
                             <!-- ===== HISTÓRICO ===== -->
-                            <!-- ===== HISTÓRICO ===== -->
                             <div class="history">
                                 <strong>Histórico</strong>
                                 <?php
                                 $hist = $pdo->prepare("
-        SELECT h.*, u.username
-        FROM ticket_history h
-        JOIN users u ON u.id = h.usuario_id
-        WHERE h.ticket_id = :id
-        ORDER BY h.criado_em DESC
-    ");
+                                    SELECT h.*, u.username
+                                    FROM ticket_history h
+                                    JOIN users u ON u.id = h.usuario_id
+                                    WHERE h.ticket_id = :id
+                                    ORDER BY h.criado_em DESC
+                                ");
                                 $hist->execute([':id' => $ticket['id']]);
                                 $historico = $hist->fetchAll();
                                 $totalHistorico = count($historico);
@@ -430,6 +432,10 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
     </div>
 
     <script src="assets/js/script.js"></script>
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top" title="Voltar ao topo">
+        ↑
+    </button>
 </body>
 
 </html>

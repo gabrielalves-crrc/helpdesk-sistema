@@ -25,13 +25,18 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <title>Administração</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
     <h2>Administração</h2>
     <p>Configurações do sistema aqui.</p>
-
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top" title="Voltar ao topo">
+        ↑
+    </button>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>

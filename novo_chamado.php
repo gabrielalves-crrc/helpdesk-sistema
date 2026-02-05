@@ -25,6 +25,7 @@ if ($_SESSION['role'] !== 'user') {
         }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -86,7 +87,12 @@ if ($_SESSION['role'] !== 'user') {
             document.querySelector('.sidebar').classList.toggle('collapsed');
         });
     </script>
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top" title="Voltar ao topo">
+        ↑
+    </button>
 
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>

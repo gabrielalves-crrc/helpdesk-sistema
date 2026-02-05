@@ -117,3 +117,45 @@ function toggleHistorico(ticketId) {
     }
 }
 
+// ===== BOTÃO VOLTAR AO TOPO (GARANTIDO) =====
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    if (!backToTopBtn) {
+        console.error('❌ Botão #backToTop não encontrado!');
+        return;
+    }
+    
+    console.log('✅ Botão encontrado, configurando...');
+    
+    // Mostra/oculta ao rolar
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    
+    // Clique para voltar ao topo
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Forçar mostrar por 5 segundos para teste
+    setTimeout(() => {
+        backToTopBtn.classList.add('show');
+        backToTopBtn.style.background = 'red';
+        console.log('🔴 Botão mostrado em vermelho para teste');
+        
+        setTimeout(() => {
+            backToTopBtn.style.background = '';
+            if (window.scrollY <= 300) {
+                backToTopBtn.classList.remove('show');
+            }
+        }, 5000);
+    }, 1000);
+});
