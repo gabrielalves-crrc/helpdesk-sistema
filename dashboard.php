@@ -97,14 +97,11 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
 
 <body>
     <div class="app">
-
         <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <span class="logo-text">HelpDesk</span>
-
             </div>
-
             <div class="top-actions">
                 <span class="user"><i class="fa-regular fa-user"></i><?= htmlspecialchars($_SESSION['username']) ?></span>
 
@@ -113,11 +110,9 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                 </div>
             </div>
 
-
             <!-- ===== SELETOR DE IDIOMA SIMPLIFICADO ===== -->
             <div class="language-selector">
                 <div class="language-title"> 语言 / Idioma</div>
-
                 <div class="lang-links">
                     <a href="https://translate.google.com/translate?hl=zh-CN&sl=auto&tl=zh-CN&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
                         target="_blank" class="lang-link">
@@ -132,7 +127,6 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                         </div>
                     </a>
 
-
                     <a href="https://translate.google.com.br/translate?hl=pt-BR&sl=auto&tl=pt&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
                         target="_blank" class="lang-link">
 
@@ -145,7 +139,6 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                                 <img src="./uploads/br2.png" alt="">
                             </div>
                         </div>
-
                     </a>
 
                     <a href="https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"

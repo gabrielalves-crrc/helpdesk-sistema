@@ -39,15 +39,153 @@ $tickets = $stmt->fetchAll();
 </head>
 
 <body>
+    <div class="app">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="logo-text">HelpDesk</span>
+            </div>
+            <div class="top-actions">
+                <span class="user"><i class="fa-regular fa-user"></i><?= htmlspecialchars($_SESSION['username']) ?></span>
 
-    <h2>Itens enviados</h2>
+                <div class="flex-section-top-actions">
+                    <a href="logout.php" class="btn-logout">Sair</a>
+                </div>
+            </div>
 
-    <?php foreach ($tickets as $t): ?>
-        <div class="ticket-card">
-            <strong>#<?= $t['id'] ?> — <?= htmlspecialchars($t['titulo']) ?></strong><br>
-            <small><?= htmlspecialchars($t['username']) ?></small>
+            <!-- ===== SELETOR DE IDIOMA SIMPLIFICADO ===== -->
+            <div class="language-selector">
+                <div class="language-title"> 语言 / Idioma</div>
+                <div class="lang-links">
+                    <a href="https://translate.google.com/translate?hl=zh-CN&sl=auto&tl=zh-CN&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                        target="_blank" class="lang-link">
+                        <div class="flex">
+                            <div class="flex-lenguage">
+                                <span class="flag">🇨🇳</span>
+                                <span>中文</span>
+                            </div>
+                            <div class="flex-icon">
+                                <img src="./uploads/ch2.png" alt="">
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://translate.google.com.br/translate?hl=pt-BR&sl=auto&tl=pt&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                        target="_blank" class="lang-link">
+
+                        <div class="flex">
+                            <div class="flex-lenguage">
+                                <span class="flag">🇧🇷</span>
+                                <span>Português</span>
+                            </div>
+                            <div class="flex-icon">
+                                <img src="./uploads/br2.png" alt="">
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                        target="_blank" class="lang-link">
+
+                        <div class="flex">
+                            <div class="flex-lenguage">
+                                <span class="flag">🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="flex-icon">
+                                <img src="./uploads/en2.png" alt="">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <nav class="menu">
+                <a href="dashboard.php" class="menu-item active">
+                    📩 Chamados
+                    <?php if ($totalAbertos > 0): ?>
+                        <span class="badge"><?= $totalAbertos ?></span>
+                    <?php endif; ?>
+                </a>
+
+                <?php if ($_SESSION['role'] === 'user'): ?>
+                    <a href="novo_chamado.php">➕ Novo Chamado</a>
+                <?php endif; ?>
+
+                <a href="itens-enviados.php" class="menu-item">📤 Itens enviados</a>
+                <a href="lixeira.php" class="menu-item">🗑️ Lixeira</a>
+
+                <?php if ($_SESSION['role'] === 'admin'): ?>
+                    <a href="admin.php" class="menu-item">⚙️ Administração</a>
+                <?php endif; ?>
+            </nav>
+            <div class="flex-icon-dark">
+                <button id="toggleDark" class="dark-btn">🌙</button>
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO -->
+        <div class="main">
+            <!-- TOPO -->
+            <header class="topbar">
+                <div class="logo">
+                    <img src="uploads/logotipo-att.jpeg" alt="Logo" class="logo-img">
+                </div>
+
+                <div class="stats-bar">
+                    <div class="all-stat-value line-right">
+                        <div class="stat-item">
+                            <span class="stat-value in-progress"><?= $stats['em_andamento'] ?? 0 ?></span>
+                        </div>
+
+                        <div class="flex-stats">
+                            <span class="stat-label">Em andamento</span>
+                        </div>
+                    </div>
+
+                    <div class="all-stat-value line-right">
+                        <div class="stat-item">
+                            <span class="stat-value active"><?= $stats['ativos'] ?? 0 ?></span>
+                        </div>
+                        <div class="flex-stats">
+                            <span class="stat-label">Ativos</span>
+                        </div>
+                    </div>
+
+                    <div class="all-stat-value line-right">
+                        <div class="stat-item">
+                            <span class="stat-value resolved"><?= $stats['resolvidos'] ?? 0 ?></span>
+                        </div>
+
+                        <div class="flex-stats">
+                            <span class="stat-label">Resolvidos</span>
+                        </div>
+                    </div>
+
+                    <div class="all-stat-value">
+                        <div class="stat-item">
+
+                            <span class="stat-value total"><?= $stats['total'] ?? 0 ?></span>
+                        </div>
+                        <div class="flex-stats">
+                            <span class="stat-label">Total</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="dashboard">
+                <h2>Itens enviados</h2>
+                <?php foreach ($tickets as $t): ?>
+                    <div class="ticket-card">
+                        <strong>#<?= $t['id'] ?> — <?= htmlspecialchars($t['titulo']) ?></strong><br>
+                        <small><?= htmlspecialchars($t['username']) ?></small>
+                    </div>
+                <?php endforeach; ?>
+            </main>
+
         </div>
-    <?php endforeach; ?>
+    </div>
     <!-- Botão Voltar ao Topo -->
     <button id="backToTop" class="back-to-top" title="Voltar ao topo">
         ↑
