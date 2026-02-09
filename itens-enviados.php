@@ -19,24 +19,15 @@ $tickets = $stmt->fetchAll();
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>Itens enviados</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'pt',
-                includedLanguages: 'pt,en,zh-CN,es,fr',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<?php
+$pageTitle = "Itens Enviados - Histórico de Envios | HelpDesk CRRC";
+$pageDescription = "Consulte o histórico completo de itens enviados pelo sistema de helpdesk da CRRC Brasil. Acompanhe materiais, equipamentos e documentos encaminhados.";
+$pageKeywords = "itens enviados, histórico envios, materiais encaminhados, equipamentos, documentos, logística, tracking, helpdesk CRRC";
+$ogImage = "uploads/logotipo.png";
+
+// AGORA INCLUA O HEAD
+include 'assets/head/head.php';
+?>
 
 <body>
     <div class="app">
@@ -49,7 +40,7 @@ $tickets = $stmt->fetchAll();
                 <span class="user"><i class="fa-regular fa-user"></i><?= htmlspecialchars($_SESSION['username']) ?></span>
 
                 <div class="flex-section-top-actions">
-                    <a href="logout.php" class="btn-logout">Sair</a>
+                    <a href="logout.php" class="btn-logout">出去 / Sair</a>
                 </div>
             </div>
 
@@ -101,18 +92,18 @@ $tickets = $stmt->fetchAll();
             </div>
 
             <nav class="menu">
-                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>Home</a>
+                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>首页 / Home</a>
 
                 <?php if ($_SESSION['role'] === 'user'): ?>
                     <a href="novo_chamado.php"><i class="fa-solid fa-plus"></i> Novo Chamado</a>
                 <?php endif; ?>
 
-                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i> Itens enviados</a>
-                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i> Lixeira</a>
+                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i>发送 / Enviados</a>
+                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i>垃圾桶 / Lixeira</a>
             </nav>
-            <div class="flex-icon-dark">
+            <!-- <div class="flex-icon-dark">
                 <button id="toggleDark" class="dark-btn">🌙</button>
-            </div>
+            </div> -->
         </aside>
 
         <!-- CONTEÚDO -->
@@ -123,7 +114,7 @@ $tickets = $stmt->fetchAll();
                     <img src="uploads/logotipo-att.jpeg" alt="Logo" class="logo-img">
                 </div>
 
-                <div class="status-toggle-container">
+                <!-- <div class="status-toggle-container">
                     <button class="status-toggle-btn" id="statusToggle">
                         <svg class="toggle-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
@@ -170,11 +161,12 @@ $tickets = $stmt->fetchAll();
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </header>
+            <div class="banner2"></div>
 
             <main class="dashboard">
-                <h2>Itens enviados</h2>
+                <h2>已发货物品 / Itens enviados</h2>
                 <?php foreach ($tickets as $t): ?>
                     <div class="ticket-card">
                         <strong>#<?= $t['id'] ?> — <?= htmlspecialchars($t['titulo']) ?></strong><br>

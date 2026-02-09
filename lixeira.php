@@ -47,25 +47,15 @@ if (isset($_POST['delete_permanent'])) {
 <!DOCTYPE html>
 <html lang="pt-br">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Lixeira - HelpDesk</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'pt',
-                includedLanguages: 'pt,en,zh-CN,es,fr',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<?php
+// VERSÃO 1: Simples e direta
+$pageTitle = "Lixeira - Itens Excluídos | HelpDesk CRRC";
+$pageDescription = "Recupere ou gerencie itens excluídos do sistema de helpdesk da CRRC Brasil. Acesso temporário a chamados, usuários e registros removidos.";
+$pageKeywords = "lixeira, itens excluídos, recuperar dados, chamados deletados, restauração, backup, helpdesk CRRC";
+$ogImage = "https://helpdesk.crrc.com.br/uploads/lixeira-preview.jpg";
+
+include 'assets/head/head.php';
+?>
 
 <body>
     <div class="app">
@@ -78,7 +68,7 @@ if (isset($_POST['delete_permanent'])) {
                 <span class="user"><i class="fa-regular fa-user"></i><?= htmlspecialchars($_SESSION['username']) ?></span>
 
                 <div class="flex-section-top-actions">
-                    <a href="logout.php" class="btn-logout">Sair</a>
+                    <a href="logout.php" class="btn-logout">出去 / Sair</a>
                 </div>
             </div>
 
@@ -130,18 +120,18 @@ if (isset($_POST['delete_permanent'])) {
             </div>
 
             <nav class="menu">
-                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>Home</a>
+                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>首页 / Home</a>
 
                 <?php if ($_SESSION['role'] === 'user'): ?>
                     <a href="novo_chamado.php"><i class="fa-solid fa-plus"></i> Novo Chamado</a>
                 <?php endif; ?>
 
-                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i> Itens enviados</a>
-                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i> Lixeira</a>
+                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i>发送 / Enviados</a>
+                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i>垃圾桶 / Lixeira</a>
             </nav>
-            <div class="flex-icon-dark">
+            <!-- <div class="flex-icon-dark">
                 <button id="toggleDark" class="dark-btn">🌙</button>
-            </div>
+            </div> -->
         </aside>
 
         <!-- CONTEÚDO PRINCIPAL -->
@@ -163,12 +153,12 @@ if (isset($_POST['delete_permanent'])) {
                     </div>
                 </div>
             </header>
-            
-            <div class="banner"></div>
-            
+
+            <div class="banner3"></div>
+
             <!-- CONTEÚDO DA LIXEIRA -->
             <main class="dashboard">
-                <h2>🗑️ CHAMADOS EXCLUÍDOS</h2>
+                <h2>已删除通话 / CHAMADOS EXCLUÍDOS</h2>
                 <p style="margin-bottom: 20px; color: #666;">
                     Chamados movidos para lixeira. Você pode restaurá-los ou excluir permanentemente.
                 </p>
@@ -190,8 +180,8 @@ if (isset($_POST['delete_permanent'])) {
                                 </div>
 
                                 <div class="ticket-info">
-                                    <div><b>Usuário:</b> <?= htmlspecialchars($t['username']) ?></div>
-                                    <div><b>Criado em:</b> <?= $t['criado_em'] ?></div>
+                                    <div><b>用户 / Usuário:</b> <?= htmlspecialchars($t['username']) ?></div>
+                                    <div><b>创建于 / Criado em:</b> <?= $t['criado_em'] ?></div>
                                     <div><b>Status original:</b> <?= ucfirst($t['status']) ?></div>
                                 </div>
 
@@ -224,4 +214,5 @@ if (isset($_POST['delete_permanent'])) {
 
     <script src="assets/js/script.js"></script>
 </body>
+
 </html>

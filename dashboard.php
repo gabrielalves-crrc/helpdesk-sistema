@@ -72,28 +72,16 @@ if ($_SESSION['role'] === 'user') {
 $stats = $contadores->fetch(PDO::FETCH_ASSOC);
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
+<?php
+// DEFINA AS VARIÁVEIS PRIMEIRO
+$pageTitle = "Dashboard - Painel Principal | HelpDesk CRRC";
+$pageDescription = "Painel de controle do sistema de helpdesk. Visualize estatísticas, chamados recentes e atividades.";
+$pageKeywords = "dashboard, painel controle, estatísticas, chamados, helpdesk";
+$ogImage = "uploads/logotipo.png";
 
-<head>
-    <meta charset="UTF-8">
-    <title>HelpDesk</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'pt',
-                includedLanguages: 'pt,en,zh-CN,es,fr',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+// AGORA INCLUA O HEAD
+include 'assets/head/head.php';
+?>
 
 <body>
     <div class="app">
@@ -106,7 +94,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                 <span class="user"><i class="fa-regular fa-user"></i><?= htmlspecialchars($_SESSION['username']) ?></span>
 
                 <div class="flex-section-top-actions">
-                    <a href="logout.php" class="btn-logout">Sair</a>
+                    <a href="logout.php" class="btn-logout">出去 / Sair</a>
                 </div>
             </div>
 
@@ -158,18 +146,18 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
             </div>
 
             <nav class="menu">
-                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>Home</a>
+                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>首页 / Home</a>
 
                 <?php if ($_SESSION['role'] === 'user'): ?>
-                    <a href="novo_chamado.php"><i class="fa-solid fa-plus"></i> Novo Chamado</a>
+                    <a href="novo_chamado.php"><i class="fa-solid fa-plus"></i>新呼叫 / Novo Chamado</a>
                 <?php endif; ?>
 
-                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i> Itens enviados</a>
-                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i> Lixeira</a>
+                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i>发送 / Enviados</a>
+                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i>垃圾桶 / Lixeira</a>
             </nav>
-            <div class="flex-icon-dark">
+            <!-- <div class="flex-icon-dark">
                 <button id="toggleDark" class="dark-btn">🌙</button>
-            </div>
+            </div> -->
         </aside>
 
         <!-- CONTEÚDO -->
@@ -195,7 +183,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                                     <span class="stat-value in-progress"><?= $stats['em_andamento'] ?? 0 ?></span>
                                 </div>
                                 <div class="flex-stats">
-                                    <span class="stat-label">Em andamento</span>
+                                    <span class="stat-label">进行中 / Em andamento</span>
                                 </div>
                             </div>
 
@@ -204,7 +192,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                                     <span class="stat-value active"><?= $stats['ativos'] ?? 0 ?></span>
                                 </div>
                                 <div class="flex-stats">
-                                    <span class="stat-label">Ativos</span>
+                                    <span class="stat-label">资产 / Ativos</span>
                                 </div>
                             </div>
 
@@ -213,7 +201,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                                     <span class="stat-value resolved"><?= $stats['resolvidos'] ?? 0 ?></span>
                                 </div>
                                 <div class="flex-stats">
-                                    <span class="stat-label">Resolvidos</span>
+                                    <span class="stat-label">已解决 / Resolvidos</span>
                                 </div>
                             </div>
 
@@ -222,7 +210,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                                     <span class="stat-value total"><?= $stats['total'] ?? 0 ?></span>
                                 </div>
                                 <div class="flex-stats">
-                                    <span class="stat-label">Total</span>
+                                    <span class="stat-label">全部的 / Total</span>
                                 </div>
                             </div>
                         </div>
@@ -233,11 +221,11 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
             <!-- DASHBOARD -->
             <main class="dashboard">
 
-                <h2>CHAMADOS</h2>
+                <h2>通话/CHAMADOS</h2>
 
                 <?php if ($_SESSION['role'] === 'user'): ?>
                     <div style="margin-bottom:20px;">
-                        <a href="novo_chamado.php" class="btn-primary">+ Novo Chamado</a>
+                        <a href="novo_chamado.php" class="btn-primary">+ 新呼叫 / Novo Chamado</a>
                     </div>
                 <?php endif; ?>
 
@@ -272,8 +260,8 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                             <div class="ticket-content" id="content-<?= $ticket['id'] ?>">
 
                                 <div class="ticket-info">
-                                    <div><b>Usuário:</b> <?= htmlspecialchars($ticket['username']) ?></div>
-                                    <div><b>Criado em:</b> <?= $ticket['criado_em'] ?></div>
+                                    <div><b>用户 / Usuário:</b> <?= htmlspecialchars($ticket['username']) ?></div>
+                                    <div><b>创建于 / Criado em:</b> <?= $ticket['criado_em'] ?></div>
                                 </div>
 
                                 <div class="ticket-desc">
@@ -290,8 +278,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                                     <button type="button"
                                         class="leia-mais-btn"
                                         id="btn-<?= $id ?>"
-                                        onclick="toggleDescricao(<?= $id ?>)">
-                                        Leia mais...
+                                        onclick="toggleDescricao(<?= $id ?>)">阅读更多 / Leia mais...
                                     </button>
                                 </div>
 
@@ -299,17 +286,17 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                                     <form method="POST" action="update_status.php" class="status-form">
                                         <input type="hidden" name="ticket_id" value="<?= $ticket['id'] ?>">
                                         <select name="status">
-                                            <option value="aberto">Aberto</option>
-                                            <option value="em_andamento">Em andamento</option>
-                                            <option value="fechado">Fechado</option>
+                                            <option value="aberto">开放 / Aberto</option>
+                                            <option value="em_andamento">进行中 / Em andamento</option>
+                                            <option value="fechado">已关闭 / Fechado</option>
                                         </select>
-                                        <button type="submit">Atualizar</button>
+                                        <button type="submit">更新 / Atualizar</button>
                                     </form>
                                 <?php endif; ?>
 
                                 <!-- ===== COMENTÁRIOS ===== -->
                                 <div class="comments">
-                                    <strong>Comentários</strong>
+                                    <strong>评论 / Comentários</strong>
 
                                     <?php
                                     $c = $pdo->prepare("
@@ -332,14 +319,14 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                                     <?php endforeach; ?>
 
                                     <form method="POST" action="add_comment.php" enctype="multipart/form-data" class="comment-form">
-                                        <textarea name="comment" placeholder="Digite um comentário..."></textarea>
+                                        <textarea name="comment" placeholder="输入评论 / Digite um comentário..."></textarea>
 
                                         <label class="file-label">
-                                            📎 Anexar arquivo
+                                            📎附加文件 / Anexar arquivo
                                             <input type="file" name="file" hidden>
                                         </label>
 
-                                        <button type="submit">Enviar</button>
+                                        <button type="submit">发送 / Enviar</button>
 
                                         <input type="hidden" name="ticket_id" value="<?= $ticket['id'] ?>">
                                     </form>
@@ -355,7 +342,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
 
                                 <?php if ($anexos): ?>
                                     <div class="attachments">
-                                        <strong>Anexos</strong>
+                                        <strong>附件 / Anexos</strong>
                                         <ul>
                                             <?php foreach ($anexos as $f): ?>
                                                 <li>
@@ -370,7 +357,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
 
                                 <!-- ===== HISTÓRICO ===== -->
                                 <div class="history">
-                                    <strong>Histórico</strong>
+                                    <strong>历史 / Histórico</strong>
                                     <?php
                                     $hist = $pdo->prepare("
                                     SELECT h.*, u.username
@@ -414,12 +401,11 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                                             <button type="button"
                                                 class="ver-historico-btn"
                                                 onclick="toggleHistorico(<?= $ticket['id'] ?>)"
-                                                id="btn-historico-<?= $ticket['id'] ?>">
-                                                Ver histórico completo (<?= $totalHistorico - 1 ?> mais)
+                                                id="btn-historico-<?= $ticket['id'] ?>">查看完整历史记录 / Ver histórico completo (<?= $totalHistorico - 1 ?> mais)
                                             </button>
                                         <?php endif; ?>
                                     <?php else: ?>
-                                        <em>Sem histórico</em>
+                                        <em>没有历史 / Sem histórico</em>
                                     <?php endif; ?>
                                 </div>
                             </div>

@@ -2,25 +2,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Login - HelpDesk</title>
-    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'pt',
-                includedLanguages: 'pt,en,zh-CN,es,fr',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<?php
+$pageTitle = "Login - Acesso ao Sistema | HelpDesk CRRC";
+$pageDescription = "Faça login no sistema de helpdesk da CRRC Brasil com suas credenciais corporativas.";
+$pageKeywords = "login, acesso, autenticação, helpdesk CRRC";
+$ogImage = "uploads/logotipo.png";
+
+include 'assets/head/head.php';
+?>
 
 <body class="login-page">
 
@@ -41,20 +30,20 @@
     <div class="login-card">
         <img src="uploads/logotipo-att.jpeg" alt="Logo CRRC">
         <h1>HelpDesk</h1>
-        <p class="subtitle">Acesso ao sistema</p>
+        <p class="subtitle">系统访问权限 / Acesso ao sistema</p>
 
         <?php if (isset($_GET['erro'])): ?>
             <div class="error">Usuário ou senha inválidos</div>
         <?php endif; ?>
 
         <form method="POST" action="login.php">
-            <label>Usuário</label>
+            <label>用户 / Usuário</label>
             <input type="text" name="username" required>
 
-            <label>Senha</label>
+            <label>密码 / Senha</label>
             <input type="password" name="password" required>
 
-            <button type="submit" class="btn-primary">Entrar</button>
+            <button type="submit" class="btn-primary">进入 / Entrar</button>
         </form>
 
         <div class="login-card-footer">

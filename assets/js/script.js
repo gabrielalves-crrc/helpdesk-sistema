@@ -126,8 +126,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
-    console.log('✅ Botão encontrado, configurando...');
-    
     // Mostra/oculta ao rolar
     window.addEventListener('scroll', function() {
         if (window.scrollY > 300) {
@@ -149,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         backToTopBtn.classList.add('show');
         backToTopBtn.style.background = 'red';
-        console.log('🔴 Botão mostrado em vermelho para teste');
         
         setTimeout(() => {
             backToTopBtn.style.background = '';
