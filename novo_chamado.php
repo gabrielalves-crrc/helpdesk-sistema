@@ -10,7 +10,7 @@ if ($_SESSION['role'] !== 'user') {
 
 <head>
     <meta charset="UTF-8">
-    <title>Novo Chamado</title>
+    <title>Lixeira - HelpDesk</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
@@ -29,24 +29,79 @@ if ($_SESSION['role'] !== 'user') {
 </head>
 
 <body>
-
     <div class="app">
-
         <!-- SIDEBAR -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <span class="logo-text">HelpDesk</span>
-                <button class="toggle-btn">☰</button>
+            </div>
+            <div class="top-actions">
+                <span class="user"><i class="fa-regular fa-user"></i><?= htmlspecialchars($_SESSION['username']) ?></span>
+
+                <div class="flex-section-top-actions">
+                    <a href="logout.php" class="btn-logout">Sair</a>
+                </div>
+            </div>
+
+            <!-- ===== SELETOR DE IDIOMA ===== -->
+            <div class="language-selector">
+                <div class="language-title"> 语言 / Idioma</div>
+                <div class="lang-links">
+                    <a href="https://translate.google.com/translate?hl=zh-CN&sl=auto&tl=zh-CN&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                        target="_blank" class="lang-link">
+                        <div class="flex">
+                            <div class="flex-lenguage">
+                                <span class="flag">🇨🇳</span>
+                                <span>中文</span>
+                            </div>
+                            <div class="flex-icon">
+                                <img src="./uploads/ch2.png" alt="">
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://translate.google.com.br/translate?hl=pt-BR&sl=auto&tl=pt&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                        target="_blank" class="lang-link">
+
+                        <div class="flex">
+                            <div class="flex-lenguage">
+                                <span class="flag">🇧🇷</span>
+                                <span>Português</span>
+                            </div>
+                            <div class="flex-icon">
+                                <img src="./uploads/br2.png" alt="">
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                        target="_blank" class="lang-link">
+
+                        <div class="flex">
+                            <div class="flex-lenguage">
+                                <span class="flag">🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="flex-icon">
+                                <img src="./uploads/en2.png" alt="">
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
 
             <nav class="menu">
-                <a href="dashboard.php">
-                    <span class="text">Dashboard</span>
-                </a>
-                <a href="novo_chamado.php" class="active">
-                    <span class="text">Novo Chamado</span>
-                </a>
+                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>Home</a>
+
+                <?php if ($_SESSION['role'] === 'user'): ?>
+                    <a href="novo_chamado.php"><i class="fa-solid fa-plus"></i> Novo Chamado</a>
+                <?php endif; ?>
+
+                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i> Itens enviados</a>
+                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i> Lixeira</a>
             </nav>
+            <div class="flex-icon-dark">
+                <button id="toggleDark" class="dark-btn">🌙</button>
+            </div>
         </aside>
 
         <!-- CONTEÚDO -->

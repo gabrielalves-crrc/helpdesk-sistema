@@ -159,3 +159,113 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }, 1000);
 });
+
+// Função para minimizar/expandir chamado
+function toggleTicket(ticketId) {
+    const ticket = document.getElementById(`ticket-${ticketId}`);
+    const btn = ticket.querySelector('.minimize-btn i');
+    
+    // Alternar classe 'minimized'
+    ticket.classList.toggle('minimized');
+    
+    // Alternar ícone
+    if (ticket.classList.contains('minimized')) {
+        btn.className = 'fas fa-plus';
+        btn.title = 'Expandir';
+        // Salvar estado
+        localStorage.setItem(`ticket-${ticketId}-minimized`, 'true');
+    } else {
+        btn.className = 'fas fa-minus';
+        btn.title = 'Minimizar';
+        // Remover estado
+        localStorage.removeItem(`ticket-${ticketId}-minimized`);
+    }
+}
+
+
+
+// Restaurar estados minimizados ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    // Para cada chamado na página
+    document.querySelectorAll('.ticket-card').forEach(ticket => {
+        const ticketId = ticket.id.replace('ticket-', '');
+        const isMinimized = localStorage.getItem(`ticket-${ticketId}-minimized`) === 'true';
+        
+        if (isMinimized) {
+            ticket.classList.add('minimized');
+            const btn = ticket.querySelector('.minimize-btn i');
+            if (btn) {
+                btn.className = 'fas fa-plus';
+                btn.title = 'Expandir';
+            }
+        }
+    });
+});
+
+// Toggle para Status - Versão Otimizada
+const statusToggle = document.getElementById('statusToggle');
+const statusContent = document.getElementById('statusContent');
+const statusContainer = document.querySelector('.status-toggle-container');
+
+if (statusToggle) {
+    statusToggle.addEventListener('click', function(e) {
+        e.stopPropagation(); // Previne propagação
+        
+        const isOpen = statusContainer.classList.contains('open');
+        
+        if (isOpen) {
+            // Fechar com animação
+            statusContent.style.transition = 'max-height 0.3s ease-in-out, opacity 0.2s ease 0.1s, padding 0.3s ease';
+            statusContainer.classList.remove('open');
+            statusToggle.setAttribute('aria-expanded', 'false');
+            
+            // Animar ícone
+            const icon = this.querySelector('.toggle-icon');
+            icon.style.transition = 'transform 0.3s ease';
+            
+            // Salvar estado
+            localStorage.setItem('statusPanelOpen', 'false');
+        } else {
+            // Abrir com animação
+            statusContent.style.transition = 'max-height 0.4s ease-in-out, opacity 0.3s ease, padding 0.3s ease';
+            statusContainer.classList.add('open');
+            statusToggle.setAttribute('aria-expanded', 'true');
+            
+            // Animar ícone
+            const icon = this.querySelector('.toggle-icon');
+            icon.style.transition = 'transform 0.3s ease';
+            
+            // Salvar estado
+            localStorage.setItem('statusPanelOpen', 'true');
+        }
+    });
+    
+    // Restaurar estado salvo (com animação suave)
+    if (localStorage.getItem('statusPanelOpen') === 'true') {
+        // Pequeno delay para carregar a página primeiro
+        setTimeout(() => {
+            statusContainer.classList.add('open');
+            statusToggle.setAttribute('aria-expanded', 'true');
+        }, 100);
+    }
+}
+
+// Fechar ao clicar fora (opcional, mas mais suave)
+document.addEventListener('click', function(event) {
+    if (statusContainer && 
+        statusContainer.classList.contains('open') && 
+        !statusContainer.contains(event.target)) {
+        
+        statusContent.style.transition = 'max-height 0.3s ease-in-out, opacity 0.2s ease 0.1s, padding 0.3s ease';
+        statusContainer.classList.remove('open');
+        statusToggle.setAttribute('aria-expanded', 'false');
+        
+        const icon = statusToggle.querySelector('.toggle-icon');
+        if (icon) {
+            icon.style.transition = 'transform 0.3s ease';
+            icon.style.transform = 'rotate(0deg)';
+        }
+        
+        localStorage.setItem('statusPanelOpen', 'false');
+    }
+});

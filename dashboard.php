@@ -112,7 +112,7 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
 
             <!-- ===== SELETOR DE IDIOMA SIMPLIFICADO ===== -->
             <div class="language-selector">
-                <div class="language-title"> 语言 / Idioma</div>
+                <div class="language-title">语言 / Idioma</div>
                 <div class="lang-links">
                     <a href="https://translate.google.com/translate?hl=zh-CN&sl=auto&tl=zh-CN&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
                         target="_blank" class="lang-link">
@@ -158,23 +158,14 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
             </div>
 
             <nav class="menu">
-                <a href="chamados.php" class="menu-item active">
-                    📩 Chamados
-                    <?php if ($totalAbertos > 0): ?>
-                        <span class="badge"><?= $totalAbertos ?></span>
-                    <?php endif; ?>
-                </a>
+                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>Home</a>
 
                 <?php if ($_SESSION['role'] === 'user'): ?>
-                    <a href="novo_chamado.php">➕ Novo Chamado</a>
+                    <a href="novo_chamado.php"><i class="fa-solid fa-plus"></i> Novo Chamado</a>
                 <?php endif; ?>
 
-                <a href="itens-enviados.php" class="menu-item">📤 Itens enviados</a>
-                <a href="lixeira.php" class="menu-item">🗑️ Lixeira</a>
-
-                <?php if ($_SESSION['role'] === 'admin'): ?>
-                    <a href="admin.php" class="menu-item">⚙️ Administração</a>
-                <?php endif; ?>
+                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i> Itens enviados</a>
+                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i> Lixeira</a>
             </nav>
             <div class="flex-icon-dark">
                 <button id="toggleDark" class="dark-btn">🌙</button>
@@ -189,45 +180,51 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
                 <div class="logo">
                     <img src="uploads/logotipo-att.jpeg" alt="Logo" class="logo-img">
                 </div>
+                <div class="status-toggle-container">
+                    <button class="status-toggle-btn" id="statusToggle">
+                        <svg class="toggle-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+                        </svg>
+                        <span class="toggle-text">地位 / Status</span>
+                    </button>
 
-                <div class="stats-bar">
+                    <div class="status-content" id="statusContent">
+                        <div class="stats-bar">
+                            <div class="all-stat-value line-right">
+                                <div class="stat-item">
+                                    <span class="stat-value in-progress"><?= $stats['em_andamento'] ?? 0 ?></span>
+                                </div>
+                                <div class="flex-stats">
+                                    <span class="stat-label">Em andamento</span>
+                                </div>
+                            </div>
 
-                    <div class="all-stat-value line-right">
-                        <div class="stat-item">
-                            <span class="stat-value in-progress"><?= $stats['em_andamento'] ?? 0 ?></span>
-                        </div>
+                            <div class="all-stat-value line-right">
+                                <div class="stat-item">
+                                    <span class="stat-value active"><?= $stats['ativos'] ?? 0 ?></span>
+                                </div>
+                                <div class="flex-stats">
+                                    <span class="stat-label">Ativos</span>
+                                </div>
+                            </div>
 
-                        <div class="flex-stats">
-                            <span class="stat-label">Em andamento</span>
-                        </div>
-                    </div>
+                            <div class="all-stat-value line-right">
+                                <div class="stat-item">
+                                    <span class="stat-value resolved"><?= $stats['resolvidos'] ?? 0 ?></span>
+                                </div>
+                                <div class="flex-stats">
+                                    <span class="stat-label">Resolvidos</span>
+                                </div>
+                            </div>
 
-                    <div class="all-stat-value line-right">
-                        <div class="stat-item">
-                            <span class="stat-value active"><?= $stats['ativos'] ?? 0 ?></span>
-                        </div>
-                        <div class="flex-stats">
-                            <span class="stat-label">Ativos</span>
-                        </div>
-                    </div>
-
-                    <div class="all-stat-value line-right">
-                        <div class="stat-item">
-                            <span class="stat-value resolved"><?= $stats['resolvidos'] ?? 0 ?></span>
-                        </div>
-
-                        <div class="flex-stats">
-                            <span class="stat-label">Resolvidos</span>
-                        </div>
-                    </div>
-
-                    <div class="all-stat-value">
-                        <div class="stat-item">
-
-                            <span class="stat-value total"><?= $stats['total'] ?? 0 ?></span>
-                        </div>
-                        <div class="flex-stats">
-                            <span class="stat-label">Total</span>
+                            <div class="all-stat-value">
+                                <div class="stat-item">
+                                    <span class="stat-value total"><?= $stats['total'] ?? 0 ?></span>
+                                </div>
+                                <div class="flex-stats">
+                                    <span class="stat-label">Total</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -255,167 +252,177 @@ $stats = $contadores->fetch(PDO::FETCH_ASSOC);
 
                 <div id="tickets-container" class="hidden">
                     <?php foreach ($tickets as $ticket): ?>
-                        <div class="ticket-card">
+                        <div class="ticket-card" id="ticket-<?= $ticket['id'] ?>">
 
                             <div class="ticket-header">
                                 <strong>#<?= $ticket['id'] ?> — <?= htmlspecialchars($ticket['titulo']) ?></strong>
                                 <span class="status <?= $ticket['status'] ?>">
                                     <?= ucfirst(str_replace('_', ' ', $ticket['status'])) ?>
                                 </span>
+
+                                <!-- BOTÕES DE AÇÃO -->
+                                <div class="ticket-actions">
+                                    <button class="minimize-btn" onclick="toggleTicket(<?= $ticket['id'] ?>)">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
                             </div>
 
-                            <div class="ticket-info">
-                                <div><b>Usuário:</b> <?= htmlspecialchars($ticket['username']) ?></div>
-                                <div><b>Criado em:</b> <?= $ticket['criado_em'] ?></div>
-                            </div>
+                            <!-- CONTEÚDO DO CHAMADO (isso vai ser escondido quando minimizado) -->
+                            <div class="ticket-content" id="content-<?= $ticket['id'] ?>">
 
-                            <div class="ticket-desc">
-                                <?php
-                                $descricao = $ticket['descricao'];
-                                $descricaoHTML = nl2br(htmlspecialchars($descricao));
-                                $id = $ticket['id'];
-                                ?>
+                                <div class="ticket-info">
+                                    <div><b>Usuário:</b> <?= htmlspecialchars($ticket['username']) ?></div>
+                                    <div><b>Criado em:</b> <?= $ticket['criado_em'] ?></div>
+                                </div>
 
-                                <p class="desc-text" id="desc-<?= $id ?>">
-                                    <?= $descricaoHTML ?>
-                                </p>
+                                <div class="ticket-desc">
+                                    <?php
+                                    $descricao = $ticket['descricao'];
+                                    $descricaoHTML = nl2br(htmlspecialchars($descricao));
+                                    $id = $ticket['id'];
+                                    ?>
 
-                                <button type="button"
-                                    class="leia-mais-btn"
-                                    id="btn-<?= $id ?>"
-                                    onclick="toggleDescricao(<?= $id ?>)">
-                                    Leia mais...
-                                </button>
-                            </div>
+                                    <p class="desc-text" id="desc-<?= $id ?>">
+                                        <?= $descricaoHTML ?>
+                                    </p>
 
-                            <?php if ($_SESSION['role'] === 'admin'): ?>
-                                <form method="POST" action="update_status.php" class="status-form">
-                                    <input type="hidden" name="ticket_id" value="<?= $ticket['id'] ?>">
-                                    <select name="status">
-                                        <option value="aberto">Aberto</option>
-                                        <option value="em_andamento">Em andamento</option>
-                                        <option value="fechado">Fechado</option>
-                                    </select>
-                                    <button type="submit">Atualizar</button>
-                                </form>
-                            <?php endif; ?>
+                                    <button type="button"
+                                        class="leia-mais-btn"
+                                        id="btn-<?= $id ?>"
+                                        onclick="toggleDescricao(<?= $id ?>)">
+                                        Leia mais...
+                                    </button>
+                                </div>
 
-                            <!-- ===== COMENTÁRIOS ===== -->
-                            <div class="comments">
-                                <strong>Comentários</strong>
+                                <?php if ($_SESSION['role'] === 'admin'): ?>
+                                    <form method="POST" action="update_status.php" class="status-form">
+                                        <input type="hidden" name="ticket_id" value="<?= $ticket['id'] ?>">
+                                        <select name="status">
+                                            <option value="aberto">Aberto</option>
+                                            <option value="em_andamento">Em andamento</option>
+                                            <option value="fechado">Fechado</option>
+                                        </select>
+                                        <button type="submit">Atualizar</button>
+                                    </form>
+                                <?php endif; ?>
 
-                                <?php
-                                $c = $pdo->prepare("
+                                <!-- ===== COMENTÁRIOS ===== -->
+                                <div class="comments">
+                                    <strong>Comentários</strong>
+
+                                    <?php
+                                    $c = $pdo->prepare("
                             SELECT c.*, u.username
                             FROM ticket_comments c
                             JOIN users u ON u.id = c.user_id
                             WHERE c.ticket_id = :id
                             ORDER BY c.criado_em ASC
                         ");
-                                $c->execute([':id' => $ticket['id']]);
-                                $comentarios = $c->fetchAll();
-                                ?>
+                                    $c->execute([':id' => $ticket['id']]);
+                                    $comentarios = $c->fetchAll();
+                                    ?>
 
-                                <?php foreach ($comentarios as $com): ?>
-                                    <div class="comment <?= $com['user_id'] == $_SESSION['user_id'] ? 'me' : '' ?>">
-                                        <b><?= htmlspecialchars($com['username']) ?></b>
-                                        <p><?= nl2br(htmlspecialchars($com['comentario'])) ?></p>
-                                        <span><?= $com['criado_em'] ?></span>
-                                    </div>
-                                <?php endforeach; ?>
+                                    <?php foreach ($comentarios as $com): ?>
+                                        <div class="comment <?= $com['user_id'] == $_SESSION['user_id'] ? 'me' : '' ?>">
+                                            <b><?= htmlspecialchars($com['username']) ?></b>
+                                            <p><?= nl2br(htmlspecialchars($com['comentario'])) ?></p>
+                                            <span><?= $com['criado_em'] ?></span>
+                                        </div>
+                                    <?php endforeach; ?>
 
-                                <form method="POST" action="add_comment.php" enctype="multipart/form-data" class="comment-form">
-                                    <textarea name="comment" placeholder="Digite um comentário..."></textarea>
+                                    <form method="POST" action="add_comment.php" enctype="multipart/form-data" class="comment-form">
+                                        <textarea name="comment" placeholder="Digite um comentário..."></textarea>
 
-                                    <label class="file-label">
-                                        📎 Anexar arquivo
-                                        <input type="file" name="file" hidden>
-                                    </label>
+                                        <label class="file-label">
+                                            📎 Anexar arquivo
+                                            <input type="file" name="file" hidden>
+                                        </label>
 
-                                    <button type="submit">Enviar</button>
+                                        <button type="submit">Enviar</button>
 
-                                    <input type="hidden" name="ticket_id" value="<?= $ticket['id'] ?>">
-                                </form>
-                            </div>
+                                        <input type="hidden" name="ticket_id" value="<?= $ticket['id'] ?>">
+                                    </form>
+                                </div>
 
-                            <?php
-                            $files = $pdo->prepare("
+                                <?php
+                                $files = $pdo->prepare("
                             SELECT * FROM ticket_files
                             WHERE ticket_id = :id");
-                            $files->execute([':id' => $ticket['id']]);
-                            $anexos = $files->fetchAll();
-                            ?>
+                                $files->execute([':id' => $ticket['id']]);
+                                $anexos = $files->fetchAll();
+                                ?>
 
-                            <?php if ($anexos): ?>
-                                <div class="attachments">
-                                    <strong>Anexos</strong>
-                                    <ul>
-                                        <?php foreach ($anexos as $f): ?>
-                                            <li>
-                                                📎 <a href="<?= $f['file_path'] ?>" target="_blank">
-                                                    <?= htmlspecialchars($f['file_name']) ?>
-                                                </a>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </div>
-                            <?php endif; ?>
+                                <?php if ($anexos): ?>
+                                    <div class="attachments">
+                                        <strong>Anexos</strong>
+                                        <ul>
+                                            <?php foreach ($anexos as $f): ?>
+                                                <li>
+                                                    📎 <a href="<?= $f['file_path'] ?>" target="_blank">
+                                                        <?= htmlspecialchars($f['file_name']) ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                <?php endif; ?>
 
-                            <!-- ===== HISTÓRICO ===== -->
-                            <div class="history">
-                                <strong>Histórico</strong>
-                                <?php
-                                $hist = $pdo->prepare("
+                                <!-- ===== HISTÓRICO ===== -->
+                                <div class="history">
+                                    <strong>Histórico</strong>
+                                    <?php
+                                    $hist = $pdo->prepare("
                                     SELECT h.*, u.username
                                     FROM ticket_history h
                                     JOIN users u ON u.id = h.usuario_id
                                     WHERE h.ticket_id = :id
                                     ORDER BY h.criado_em DESC
                                 ");
-                                $hist->execute([':id' => $ticket['id']]);
-                                $historico = $hist->fetchAll();
-                                $totalHistorico = count($historico);
-                                ?>
+                                    $hist->execute([':id' => $ticket['id']]);
+                                    $historico = $hist->fetchAll();
+                                    $totalHistorico = count($historico);
+                                    ?>
 
-                                <?php if ($historico): ?>
-                                    <!-- ÚLTIMO HISTÓRICO (sempre visível) -->
-                                    <?php if (isset($historico[0])): ?>
-                                        <div class="ultimo-historico">
-                                            <span class="historico-data"><?= $historico[0]['criado_em'] ?></span> —
-                                            <b><?= htmlspecialchars($historico[0]['username']) ?></b>:
-                                            <span class="historico-mudanca">
-                                                <?= $historico[0]['status_anterior'] ?> → <?= $historico[0]['status_novo'] ?>
-                                            </span>
-                                        </div>
+                                    <?php if ($historico): ?>
+                                        <!-- ÚLTIMO HISTÓRICO (sempre visível) -->
+                                        <?php if (isset($historico[0])): ?>
+                                            <div class="ultimo-historico">
+                                                <span class="historico-data"><?= $historico[0]['criado_em'] ?></span> —
+                                                <b><?= htmlspecialchars($historico[0]['username']) ?></b>:
+                                                <span class="historico-mudanca">
+                                                    <?= $historico[0]['status_anterior'] ?> → <?= $historico[0]['status_novo'] ?>
+                                                </span>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <!-- HISTÓRICO COMPLETO (escondido por padrão) -->
+                                        <?php if ($totalHistorico > 1): ?>
+                                            <div class="historico-completo" id="historico-<?= $ticket['id'] ?>" style="display: none;">
+                                                <ul>
+                                                    <?php for ($i = 1; $i < $totalHistorico; $i++): ?>
+                                                        <li>
+                                                            <?= $historico[$i]['criado_em'] ?> —
+                                                            <b><?= htmlspecialchars($historico[$i]['username']) ?></b>:
+                                                            <?= $historico[$i]['status_anterior'] ?> → <?= $historico[$i]['status_novo'] ?>
+                                                        </li>
+                                                    <?php endfor; ?>
+                                                </ul>
+                                            </div>
+
+                                            <!-- BOTÃO VER MAIS -->
+                                            <button type="button"
+                                                class="ver-historico-btn"
+                                                onclick="toggleHistorico(<?= $ticket['id'] ?>)"
+                                                id="btn-historico-<?= $ticket['id'] ?>">
+                                                Ver histórico completo (<?= $totalHistorico - 1 ?> mais)
+                                            </button>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <em>Sem histórico</em>
                                     <?php endif; ?>
-
-                                    <!-- HISTÓRICO COMPLETO (escondido por padrão) -->
-                                    <?php if ($totalHistorico > 1): ?>
-                                        <div class="historico-completo" id="historico-<?= $ticket['id'] ?>" style="display: none;">
-                                            <ul>
-                                                <?php for ($i = 1; $i < $totalHistorico; $i++): ?>
-                                                    <li>
-                                                        <?= $historico[$i]['criado_em'] ?> —
-                                                        <b><?= htmlspecialchars($historico[$i]['username']) ?></b>:
-                                                        <?= $historico[$i]['status_anterior'] ?> → <?= $historico[$i]['status_novo'] ?>
-                                                    </li>
-                                                <?php endfor; ?>
-                                            </ul>
-                                        </div>
-
-                                        <!-- BOTÃO VER MAIS -->
-                                        <button type="button"
-                                            class="ver-historico-btn"
-                                            onclick="toggleHistorico(<?= $ticket['id'] ?>)"
-                                            id="btn-historico-<?= $ticket['id'] ?>">
-                                            Ver histórico completo (<?= $totalHistorico - 1 ?> mais)
-                                        </button>
-                                    <?php endif; ?>
-                                <?php else: ?>
-                                    <em>Sem histórico</em>
-                                <?php endif; ?>
+                                </div>
                             </div>
-
                         </div>
                     <?php endforeach; ?>
                 </div>

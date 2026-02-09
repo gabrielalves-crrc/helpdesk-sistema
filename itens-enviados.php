@@ -101,23 +101,14 @@ $tickets = $stmt->fetchAll();
             </div>
 
             <nav class="menu">
-                <a href="dashboard.php" class="menu-item active">
-                    📩 Chamados
-                    <?php if ($totalAbertos > 0): ?>
-                        <span class="badge"><?= $totalAbertos ?></span>
-                    <?php endif; ?>
-                </a>
+                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>Home</a>
 
                 <?php if ($_SESSION['role'] === 'user'): ?>
-                    <a href="novo_chamado.php">➕ Novo Chamado</a>
+                    <a href="novo_chamado.php"><i class="fa-solid fa-plus"></i> Novo Chamado</a>
                 <?php endif; ?>
 
-                <a href="itens-enviados.php" class="menu-item">📤 Itens enviados</a>
-                <a href="lixeira.php" class="menu-item">🗑️ Lixeira</a>
-
-                <?php if ($_SESSION['role'] === 'admin'): ?>
-                    <a href="admin.php" class="menu-item">⚙️ Administração</a>
-                <?php endif; ?>
+                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i> Itens enviados</a>
+                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i> Lixeira</a>
             </nav>
             <div class="flex-icon-dark">
                 <button id="toggleDark" class="dark-btn">🌙</button>
@@ -132,43 +123,51 @@ $tickets = $stmt->fetchAll();
                     <img src="uploads/logotipo-att.jpeg" alt="Logo" class="logo-img">
                 </div>
 
-                <div class="stats-bar">
-                    <div class="all-stat-value line-right">
-                        <div class="stat-item">
-                            <span class="stat-value in-progress"><?= $stats['em_andamento'] ?? 0 ?></span>
-                        </div>
+                <div class="status-toggle-container">
+                    <button class="status-toggle-btn" id="statusToggle">
+                        <svg class="toggle-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+                        </svg>
+                        <span class="toggle-text">地位 / Status</span>
+                    </button>
 
-                        <div class="flex-stats">
-                            <span class="stat-label">Em andamento</span>
-                        </div>
-                    </div>
+                    <div class="status-content" id="statusContent">
+                        <div class="stats-bar">
+                            <div class="all-stat-value line-right">
+                                <div class="stat-item">
+                                    <span class="stat-value in-progress"><?= $stats['em_andamento'] ?? 0 ?></span>
+                                </div>
+                                <div class="flex-stats">
+                                    <span class="stat-label">Em andamento</span>
+                                </div>
+                            </div>
 
-                    <div class="all-stat-value line-right">
-                        <div class="stat-item">
-                            <span class="stat-value active"><?= $stats['ativos'] ?? 0 ?></span>
-                        </div>
-                        <div class="flex-stats">
-                            <span class="stat-label">Ativos</span>
-                        </div>
-                    </div>
+                            <div class="all-stat-value line-right">
+                                <div class="stat-item">
+                                    <span class="stat-value active"><?= $stats['ativos'] ?? 0 ?></span>
+                                </div>
+                                <div class="flex-stats">
+                                    <span class="stat-label">Ativos</span>
+                                </div>
+                            </div>
 
-                    <div class="all-stat-value line-right">
-                        <div class="stat-item">
-                            <span class="stat-value resolved"><?= $stats['resolvidos'] ?? 0 ?></span>
-                        </div>
+                            <div class="all-stat-value line-right">
+                                <div class="stat-item">
+                                    <span class="stat-value resolved"><?= $stats['resolvidos'] ?? 0 ?></span>
+                                </div>
+                                <div class="flex-stats">
+                                    <span class="stat-label">Resolvidos</span>
+                                </div>
+                            </div>
 
-                        <div class="flex-stats">
-                            <span class="stat-label">Resolvidos</span>
-                        </div>
-                    </div>
-
-                    <div class="all-stat-value">
-                        <div class="stat-item">
-
-                            <span class="stat-value total"><?= $stats['total'] ?? 0 ?></span>
-                        </div>
-                        <div class="flex-stats">
-                            <span class="stat-label">Total</span>
+                            <div class="all-stat-value">
+                                <div class="stat-item">
+                                    <span class="stat-value total"><?= $stats['total'] ?? 0 ?></span>
+                                </div>
+                                <div class="flex-stats">
+                                    <span class="stat-label">Total</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
