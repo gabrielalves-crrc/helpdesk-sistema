@@ -13,6 +13,7 @@ if ($_SESSION['role'] === 'admin') {
         SELECT t.*, u.username
         FROM tickets t
         JOIN users u ON u.id = t.usuario_id
+         WHERE (t.deleted IS NULL OR t.deleted = 0)
         ORDER BY t.criado_em DESC
     ");
     $stmt->execute();
@@ -22,6 +23,7 @@ if ($_SESSION['role'] === 'admin') {
         FROM tickets t
         JOIN users u ON u.id = t.usuario_id
         WHERE t.usuario_id = :id
+        AND (t.deleted IS NULL OR t.deleted = 0)
         ORDER BY t.criado_em DESC
     ");
     $stmt->execute([':id' => $_SESSION['user_id']]);
@@ -60,7 +62,8 @@ $contadores = $pdo->prepare("
         SUM(CASE WHEN status = 'em_andamento' THEN 1 ELSE 0 END) as em_andamento,
         COUNT(*) as total
     FROM tickets
-    " . ($_SESSION['role'] === 'user' ? " WHERE usuario_id = :user_id" : "") . "
+    WHERE (deleted IS NULL OR deleted = 0)
+    " . ($_SESSION['role'] === 'user' ? " AND usuario_id = :user_id" : "") . "
 ");
 
 if ($_SESSION['role'] === 'user') {
@@ -250,9 +253,20 @@ include 'assets/head/head.php';
 
                                 <!-- BOTÕES DE AÇÃO -->
                                 <div class="ticket-actions">
+                                    <!-- BOTÃO MINIMIZAR -->
                                     <button class="minimize-btn" onclick="toggleTicket(<?= $ticket['id'] ?>)">
                                         <i class="fas fa-minus"></i>
                                     </button>
+
+                                    <!-- BOTÃO EXCLUIR (SÓ APARECE PARA ADMIN) -->
+                                    <?php if ($_SESSION['role'] === 'admin'): ?>
+                                        <a href="delete_ticket.php?id=<?= $ticket['id'] ?>"
+                                            class="delete-btn"
+                                            onclick="return confirm('Mover este chamado para a lixeira?')"
+                                            style="color: #dc3545; margin-left: 10px; text-decoration: none;">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    <?php endif; ?>
                                 </div>
                             </div>
 

@@ -186,12 +186,12 @@ include 'assets/head/head.php';
                                 </div>
 
                                 <div class="ticket-actions-trash">
-                                    <form method="POST" style="display:inline;">
-                                        <input type="hidden" name="ticket_id" value="<?= $t['id'] ?>">
+                                    <!-- <form method="POST" style="display:inline;">
+                                        <input type="hidden" name="ticket_id" value="< ?= $t['id'] ?>">
                                         <button type="submit" name="restore" class="btn-restore">
                                             <i class="fas fa-undo"></i> Restaurar Chamado
                                         </button>
-                                    </form>
+                                    </form> -->
 
                                     <form method="POST" style="display:inline;"
                                         onsubmit="return confirm('Excluir PERMANENTEMENTE o chamado #<?= $t['id'] ?>?\n\nEsta ação NÃO pode ser desfeita!');">
