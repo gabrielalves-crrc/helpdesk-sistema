@@ -266,3 +266,108 @@ document.addEventListener('click', function(event) {
         localStorage.setItem('statusPanelOpen', 'false');
     }
 });
+
+// ===== MENU MOBILE COM TRANSIÇÃO PERFEITA =====
+function toggleMobileMenu() {
+    const mobileContent = document.getElementById('mobileContent');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (!mobileContent.classList.contains('show')) {
+        // ABRIR - primeiro mostra, depois anima
+        mobileContent.classList.add('show');
+        mobileContent.style.display = 'block';
+        
+        // Força um reflow antes de animar
+        mobileContent.offsetHeight;
+        
+        // Anima para aberto
+        mobileContent.style.maxHeight = mobileContent.scrollHeight + 'px';
+        mobileContent.style.opacity = '1';
+        mobileContent.style.padding = '20px';
+        menuBtn.innerHTML = '✕';
+    } else {
+        // FECHAR - anima para fechado, DEPOIS esconde
+        mobileContent.style.maxHeight = '0';
+        mobileContent.style.opacity = '0';
+        mobileContent.style.padding = '0 20px';
+        menuBtn.innerHTML = '☰';
+        
+        // Depois da animação, remove a classe
+        setTimeout(() => {
+            if (mobileContent.style.maxHeight === '0px') {
+                mobileContent.classList.remove('show');
+                mobileContent.style.display = 'none';
+            }
+        }, 400); // Mesmo tempo da transição CSS
+    }
+}
+
+// Fecha menu ao clicar em link
+document.querySelectorAll('.menu a, .lang-link, .btn-logout').forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+            const mobileContent = document.getElementById('mobileContent');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            mobileContent.style.maxHeight = '0';
+            mobileContent.style.opacity = '0';
+            mobileContent.style.padding = '0 20px';
+            menuBtn.innerHTML = '☰';
+            
+            setTimeout(() => {
+                if (mobileContent.style.maxHeight === '0px') {
+                    mobileContent.classList.remove('show');
+                    mobileContent.style.display = 'none';
+                }
+            }, 400);
+        }
+    });
+});
+
+// Redimensionamento
+window.addEventListener('resize', function() {
+    const mobileContent = document.getElementById('mobileContent');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (window.innerWidth > 768) {
+        // Desktop - sempre visível
+        mobileContent.classList.add('show');
+        mobileContent.style.display = 'block';
+        mobileContent.style.maxHeight = 'none';
+        mobileContent.style.opacity = '1';
+        mobileContent.style.padding = '20px';
+        menuBtn.style.display = 'none';
+    } else {
+        // Mobile - escondido por padrão
+        menuBtn.style.display = 'block';
+        menuBtn.innerHTML = '☰';
+        mobileContent.classList.remove('show');
+        mobileContent.style.display = 'none';
+        mobileContent.style.maxHeight = '0';
+        mobileContent.style.opacity = '0';
+        mobileContent.style.padding = '0 20px';
+    }
+});
+
+// Inicialização
+window.addEventListener('load', function() {
+    const mobileContent = document.getElementById('mobileContent');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (window.innerWidth <= 768) {
+        menuBtn.style.display = 'block';
+        menuBtn.innerHTML = '☰';
+        mobileContent.classList.remove('show');
+        mobileContent.style.display = 'none';
+        mobileContent.style.maxHeight = '0';
+        mobileContent.style.opacity = '0';
+        mobileContent.style.padding = '0 20px';
+    } else {
+        menuBtn.style.display = 'none';
+        mobileContent.classList.add('show');
+        mobileContent.style.display = 'block';
+        mobileContent.style.maxHeight = 'none';
+        mobileContent.style.opacity = '1';
+        mobileContent.style.padding = '20px';
+    }
+});

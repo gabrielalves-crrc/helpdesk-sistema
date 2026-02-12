@@ -35,75 +35,80 @@ include 'assets/head/head.php';
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <span class="logo-text">HelpDesk</span>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    ☰
+                </button>
             </div>
-            <div class="top-actions">
-                <span class="user"><i class="fa-regular fa-user"></i><?= htmlspecialchars($_SESSION['username']) ?></span>
 
-                <div class="flex-section-top-actions">
-                    <a href="logout.php" class="btn-logout">出去 / Sair</a>
+            <div class="mobile-content" id="mobileContent">
+                <div class="top-actions">
+                    <span class="user"><i class="fa-regular fa-user"></i><?= htmlspecialchars($_SESSION['username']) ?></span>
+
+                    <div class="flex-section-top-actions">
+                        <a href="logout.php" class="btn-logout">出去 / Sair</a>
+                    </div>
                 </div>
-            </div>
 
-            <!-- ===== SELETOR DE IDIOMA SIMPLIFICADO ===== -->
-            <div class="language-selector">
-                <div class="language-title"> 语言 / Idioma</div>
-                <div class="lang-links">
-                    <a href="https://translate.google.com/translate?hl=zh-CN&sl=auto&tl=zh-CN&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
-                        target="_blank" class="lang-link">
-                        <div class="flex">
-                            <div class="flex-lenguage">
-                                <span class="flag">🇨🇳</span>
-                                <span>中文</span>
+                <!-- ===== SELETOR DE IDIOMA ===== -->
+                <div class="language-selector">
+                    <div class="language-title"> 语言 / Idioma</div>
+                    <div class="lang-links">
+                        <a href="https://translate.google.com/translate?hl=zh-CN&sl=auto&tl=zh-CN&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                            target="_blank" class="lang-link">
+                            <div class="flex">
+                                <div class="flex-lenguage">
+                                    <span class="flag">🇨🇳</span>
+                                    <span>中文</span>
+                                </div>
+                                <div class="flex-icon">
+                                    <img src="./uploads/ch2.png" alt="">
+                                </div>
                             </div>
-                            <div class="flex-icon">
-                                <img src="./uploads/ch2.png" alt="">
-                            </div>
-                        </div>
-                    </a>
+                        </a>
 
-                    <a href="https://translate.google.com.br/translate?hl=pt-BR&sl=auto&tl=pt&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
-                        target="_blank" class="lang-link">
+                        <a href="https://translate.google.com.br/translate?hl=pt-BR&sl=auto&tl=pt&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                            target="_blank" class="lang-link">
 
-                        <div class="flex">
-                            <div class="flex-lenguage">
-                                <span class="flag">🇧🇷</span>
-                                <span>Português</span>
+                            <div class="flex">
+                                <div class="flex-lenguage">
+                                    <span class="flag">🇧🇷</span>
+                                    <span>Português</span>
+                                </div>
+                                <div class="flex-icon">
+                                    <img src="./uploads/br2.png" alt="">
+                                </div>
                             </div>
-                            <div class="flex-icon">
-                                <img src="./uploads/br2.png" alt="">
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                        <a href="https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
+                            target="_blank" class="lang-link">
 
-                    <a href="https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=<?php echo urlencode((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>"
-                        target="_blank" class="lang-link">
-
-                        <div class="flex">
-                            <div class="flex-lenguage">
-                                <span class="flag">🇺🇸</span>
-                                <span>English</span>
+                            <div class="flex">
+                                <div class="flex-lenguage">
+                                    <span class="flag">🇺🇸</span>
+                                    <span>English</span>
+                                </div>
+                                <div class="flex-icon">
+                                    <img src="./uploads/en2.png" alt="">
+                                </div>
                             </div>
-                            <div class="flex-icon">
-                                <img src="./uploads/en2.png" alt="">
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <nav class="menu">
-                <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i></i>首页 / Home</a>
+                <nav class="menu">
+                    <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i>首页 / Home</a>
 
-                <?php if ($_SESSION['role'] === 'user'): ?>
-                    <a href="novo_chamado.php"><i class="fa-solid fa-plus"></i> Novo Chamado</a>
-                <?php endif; ?>
-
-                <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i>发送 / Enviados</a>
-                <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i>垃圾桶 / Lixeira</a>
-            </nav>
-            <!-- <div class="flex-icon-dark">
+                    <?php if ($_SESSION['role'] === 'user'): ?>
+                        <a href="novo_chamado.php" class="menu-item"><i class="fa-solid fa-plus"></i>新呼叫 / Novo Chamado</a>
+                    <?php else: ?>
+                        <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i>发送 / Enviados</a>
+                        <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i>垃圾桶 / Lixeira</a>
+                    <?php endif; ?>
+                </nav>
+                <!-- <div class="flex-icon-dark">
                 <button id="toggleDark" class="dark-btn">🌙</button>
             </div> -->
+            </div>
         </aside>
 
         <!-- CONTEÚDO -->

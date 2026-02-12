@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
 
  <!-- Título (com valor padrão caso não seja definido) -->
@@ -11,7 +11,7 @@
     
     <!-- Description (com valor padrão) -->
     <meta name="description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Sistema de HelpDesk da CRRC Brasil'; ?>">
-    
+
     <!-- Keywords (com valor padrão) -->
     <meta name="keywords" content="<?php echo isset($pageKeywords) ? $pageKeywords : 'helpdesk, suporte técnico, CRRC, chamados'; ?>">
 

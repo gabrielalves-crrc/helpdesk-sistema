@@ -118,7 +118,7 @@ span.user {
 .menu {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 5px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -128,10 +128,10 @@ span.user {
     gap: 12px;
     color: #fff;
     text-decoration: none;
-    padding: 12px 15px;
+    padding: 10px 5px;
     border-radius: 6px;
     margin-bottom: 5px;
-    font-size: 14px;
+    font-size: 13px;
     transition: background 0.2s;
 }
 
@@ -1187,7 +1187,6 @@ div#google_translate_element {
 
 .language-selector {
     margin-top: auto;
-    padding: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -1623,4 +1622,322 @@ div#google_translate_element {
 
 .status-content * {
     will-change: transform, opacity;
+}
+
+/* ===== TRANSIÇÃO DO MENU MOBILE ===== */
+.mobile-content {
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.3s ease,
+        padding 0.3s ease;
+    max-height: 0;
+    opacity: 0;
+    padding: 0 20px;
+}
+
+.mobile-content.show {
+    max-height: 1000px;
+    /* Valor grande o suficiente para o conteúdo */
+    opacity: 1;
+    padding: 20px;
+}
+
+.mobile-menu-btn {
+    transition: transform 0.3s ease;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.mobile-menu-btn:hover {
+    transform: scale(1.1);
+}
+
+
+/* Desktop - sempre visível */
+@media (min-width: 769px) {
+    .mobile-content {
+        display: block !important;
+        max-height: none !important;
+        opacity: 1 !important;
+        padding: 20px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .mobile-content {
+        display: none;
+        max-height: 0;
+        opacity: 0;
+        padding: 0 20px;
+    }
+
+    .mobile-content.show {
+        display: block;
+    }
+}
+
+/* ===== VERSÃO MOBILE ===== */
+@media (max-width: 768px) {
+    .app {
+        flex-direction: column;
+    }
+
+    .dashboard {
+        max-width: 100%;
+        margin: initial;
+        padding: 5px;
+    }
+
+    .dashboard h2 {
+        font-size: 23px;
+        text-align: center;
+    }
+
+    main.dashboard .btn-primary {
+        margin-left: 20%;
+    }
+
+
+    /* SIDEBAR VIRA TOPBAR MOBILE */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        padding: 10px;
+    }
+
+    .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* MENU VIRA HAMBÚRGUER */
+    .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .menu.show {
+        display: flex;
+    }
+
+    .menu-item {
+        padding: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* BOTÃO HAMBÚRGUER */
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        padding: 0 10px;
+        line-height: 1;
+    }
+
+    /* CONTEÚDO MOBILE (ESCONDIDO POR PADRÃO) */
+    .mobile-content {
+        display: none;
+        padding: 20px;
+    }
+
+    .mobile-content.show {
+        display: block;
+    }
+
+    /* AJUSTES DOS ELEMENTOS DENTRO DO MOBILE */
+    .mobile-content .top-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .mobile-content .user {
+        color: white;
+        font-size: 16px;
+    }
+
+    .mobile-content .btn-logout {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 8px 16px;
+        border-radius: 20px;
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    /* SELETOR DE IDIOMA NO MOBILE */
+    .mobile-content .language-selector {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .mobile-content .language-title {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .mobile-content .lang-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .mobile-content .lang-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+    }
+
+    /* MENU NO MOBILE */
+    .mobile-content .menu {
+        display: flex !important;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .mobile-content .menu-item {
+        padding: 12px 15px;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .mobile-content .menu-item:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .mobile-content .menu-item i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+    }
+
+    /* ESCONDER ELEMENTOS DUPLICADOS */
+    .sidebar .top-actions:not(.mobile-content .top-actions),
+    .sidebar .language-selector:not(.mobile-content .language-selector) {
+        display: none;
+    }
+
+    /* TOPBAR */
+    .topbar {
+        flex-direction: column;
+        padding: 10px;
+        height: auto;
+    }
+
+    .logo {
+        margin-bottom: 10px;
+    }
+
+    .status-toggle-container {
+        width: 100%;
+    }
+
+    .stats-bar {
+        flex-wrap: wrap;
+    }
+
+    .all-stat-value {
+        width: 48%;
+        margin-bottom: 10px;
+    }
+
+    /* TICKET CARD */
+    .ticket-card {
+        margin: 10px;
+        padding: 12px;
+    }
+
+    .ticket-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .status {
+        align-self: flex-start;
+    }
+
+    .ticket-actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    /* FORMULÁRIOS */
+    .status-form {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .status-form select,
+    .status-form button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    /* COMENTÁRIOS */
+    .comment {
+        max-width: 90%;
+    }
+
+    /* BACK TO TOP */
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+
+    .ticket-info {
+        display: flex;
+        flex-direction: column;
+        font-size: 10px;
+    }
+
+    .dashboard-call {
+        margin: initial;
+        padding: 2vh;
+        width: 100%;
+        margin-top: 5vh;
+    }
+}
+
+/* ===== TABLETS ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .ticket-card {
+        margin: 15px;
+    }
+
+    .stats-bar {
+        gap: 10px;
+    }
 }
