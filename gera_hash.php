@@ -7,9 +7,6 @@ echo password_hash("usuario123", PASSWORD_DEFAULT);
 // admin2
 // admin123
 // -----------------------
-// usuario1
-// usuario123
-// -----------------------
-// Gabriel Alves
-// Operador@202676
+// ADM Gabriel Alves
+// GabrielCRRC2026@
 // -----------------------

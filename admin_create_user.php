@@ -1,4 +1,21 @@
 <?php
+if (isset($_GET['sucesso']) && $_GET['sucesso'] === 'usuario_excluido') {
+    $mensagem = "Usuário excluído permanentemente!";
+}
+
+if (isset($_GET['erro'])) {
+    if ($_GET['erro'] === 'auto_delete') {
+        $erro = 'Você não pode excluir seu próprio usuário!';
+    } elseif ($_GET['erro'] === 'tem_chamados') {
+        $id = $_GET['id'] ?? '';
+        $erro = "Usuário #$id possui chamados ativos. Transfira ou feche os chamados primeiro!";
+    } elseif ($_GET['erro'] === 'banco') {
+        $erro = 'Erro ao excluir usuário. Tente novamente.';
+    } elseif ($_GET['erro'] === 'invalido') {
+        $erro = 'ID de usuário inválido.';
+    }
+}
+
 require 'auth.php';
 require 'config.php';
 
@@ -252,13 +269,19 @@ include 'assets/head/head.php';
                                             <th>Usuário</th>
                                             <th>Nível</th>
                                             <th>Criado em</th>
+                                            <th style="text-align: center;">Ações</th> <!-- NOVA COLUNA -->
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($usuarios as $u): ?>
                                             <tr>
                                                 <td>#<?= $u['id'] ?></td>
-                                                <td><?= htmlspecialchars($u['username']) ?></td>
+                                                <td>
+                                                    <?= htmlspecialchars($u['username']) ?>
+                                                    <?php if ($u['id'] == $_SESSION['user_id']): ?>
+                                                        <span style="font-size: 12px; color: #1e3a8a; margin-left: 5px;">(você)</span>
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td>
                                                     <?php if ($u['role'] === 'admin'): ?>
                                                         <span class="badge-admin">Admin</span>
@@ -267,6 +290,20 @@ include 'assets/head/head.php';
                                                     <?php endif; ?>
                                                 </td>
                                                 <td><?= date('d/m/Y H:i', strtotime($u['created_at'] ?? 'now')) ?></td>
+                                                <td style="text-align: center;">
+                                                    <?php if ($u['id'] != $_SESSION['user_id']): ?>
+                                                        <!-- NÃO PODE EXCLUIR A SI MESMO -->
+                                                        <a href="delete_user.php?id=<?= $u['id'] ?>"
+                                                            class="btn-delete-user"
+                                                            onclick="return confirm('⚠️ TEM CERTEZA?\n\nDeseja excluir PERMANENTEMENTE o usuário \" <?= htmlspecialchars($u['username']) ?>\"?\n\nTodos os chamados deste usuário serão transferidos para o administrador padrão.\n\nEsta ação NÃO pode ser desfeita!');">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </a>
+                                                    <?php else: ?>
+                                                        <span style="color: #ccc; cursor: not-allowed;">
+                                                            <i class="fas fa-ban"></i>
+                                                        </span>
+                                                    <?php endif; ?>
+                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -285,6 +322,7 @@ include 'assets/head/head.php';
     </div>
 
     <script src="assets/js/script.js"></script>
+    <button id="backToTop" class="back-to-top" title="Voltar ao topo">↑</button>
 
     <script>
         function gerarSenha() {
