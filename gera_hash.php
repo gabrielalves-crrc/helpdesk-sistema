@@ -9,3 +9,7 @@ echo password_hash("usuario123", PASSWORD_DEFAULT);
 // -----------------------
 // usuario1
 // usuario123
+// -----------------------
+// Gabriel Alves
+// Operador@202676
+// -----------------------

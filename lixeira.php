@@ -7,7 +7,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     exit;
 }
 
-/* BUSCAR CHAMADOS EXCLUÍDOS */
 $stmt = $pdo->prepare("
     SELECT t.*, u.username
     FROM tickets t
@@ -18,27 +17,46 @@ $stmt = $pdo->prepare("
 $stmt->execute();
 $tickets = $stmt->fetchAll();
 
-/* CONTAGEM PARA O MENU (se quiser) */
 $totalLixeira = count($tickets);
 
-// Restaurar chamado
-if (isset($_POST['restore'])) {
-    $id = $_POST['ticket_id'];
-    $stmt = $pdo->prepare("
-        UPDATE tickets 
-        SET deleted = 0, deleted_at = NULL 
-        WHERE id = ?
-    ");
-    $stmt->execute([$id]);
-    header("Location: lixeira.php");
-    exit;
-}
+// if (isset($_POST['restore'])) {
+//     $id = $_POST['ticket_id'];
+//     $stmt = $pdo->prepare("
+//         UPDATE tickets 
+//         SET deleted = 0, deleted_at = NULL 
+//         WHERE id = ?
+//     ");
+//     $stmt->execute([$id]);
+//     header("Location: lixeira.php");
+//     exit;
+// }
 
-// Deletar permanentemente
 if (isset($_POST['delete_permanent'])) {
     $id = $_POST['ticket_id'];
-    $stmt = $pdo->prepare("DELETE FROM tickets WHERE id = ?");
-    $stmt->execute([$id]);
+    
+    try {
+        $pdo->beginTransaction();
+        
+        // 1. Deleta comentários
+        $pdo->prepare("DELETE FROM ticket_comments WHERE ticket_id = ?")->execute([$id]);
+        
+        // 2. Deleta arquivos
+        $pdo->prepare("DELETE FROM ticket_files WHERE ticket_id = ?")->execute([$id]);
+        
+        // 3. Deleta histórico
+        $pdo->prepare("DELETE FROM ticket_history WHERE ticket_id = ?")->execute([$id]);
+        
+        // 4. Deleta o ticket
+        $pdo->prepare("DELETE FROM tickets WHERE id = ?")->execute([$id]);
+        
+        $pdo->commit();
+        
+        $_SESSION['mensagem'] = "Chamado #$id excluído permanentemente!";
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        $_SESSION['erro'] = "Erro ao excluir: " . $e->getMessage();
+    }
+    
     header("Location: lixeira.php");
     exit;
 }
@@ -48,7 +66,7 @@ if (isset($_POST['delete_permanent'])) {
 <html lang="pt-br">
 
 <?php
-// VERSÃO 1: Simples e direta
+
 $pageTitle = "Lixeira - Itens Excluídos | HelpDesk CRRC";
 $pageDescription = "Recupere ou gerencie itens excluídos do sistema de helpdesk da CRRC Brasil. Acesso temporário a chamados, usuários e registros removidos.";
 $pageKeywords = "lixeira, itens excluídos, recuperar dados, chamados deletados, restauração, backup, helpdesk CRRC";
@@ -59,7 +77,6 @@ include 'assets/head/head.php';
 
 <body>
     <div class="app">
-        <!-- SIDEBAR (MESMA DO DASHBOARD) -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <span class="logo-text">HelpDesk</span>
@@ -77,7 +94,6 @@ include 'assets/head/head.php';
                     </div>
                 </div>
 
-                <!-- ===== SELETOR DE IDIOMA ===== -->
                 <div class="language-selector">
                     <div class="language-title"> 语言 / Idioma</div>
                     <div class="lang-links">
@@ -130,7 +146,8 @@ include 'assets/head/head.php';
                         <a href="novo_chamado.php" class="menu-item"><i class="fa-solid fa-plus"></i>新呼叫 / Novo Chamado</a>
                     <?php else: ?>
                         <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i>发送 / Enviados</a>
-                        <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i>垃圾桶 / Lixeira</a>
+                        <a href="lixeira.php" class="menu-item active"><i class="fa-solid fa-trash"></i>垃圾桶 / Lixeira</a>
+                        <a href="admin_create_user.php" class="menu-item"><i class="fa-solid fa-user-plus"></i>创建用户 / Criar Usuário</a>
                     <?php endif; ?>
                 </nav>
                 <!-- <div class="flex-icon-dark">
@@ -139,9 +156,7 @@ include 'assets/head/head.php';
             </div>
         </aside>
 
-        <!-- CONTEÚDO PRINCIPAL -->
         <div class="main">
-            <!-- TOPO (MESMO DO DASHBOARD) -->
             <header class="topbar">
                 <div class="logo">
                     <img src="uploads/logotipo-att.jpeg" alt="Logo" class="logo-img">
@@ -161,7 +176,6 @@ include 'assets/head/head.php';
 
             <div class="banner3"></div>
 
-            <!-- CONTEÚDO DA LIXEIRA -->
             <main class="dashboard">
                 <h2>已删除通话 / CHAMADOS EXCLUÍDOS</h2>
                 <p style="margin-bottom: 20px; color: #666;">

@@ -89,10 +89,11 @@ include 'assets/head/head.php';
                     <a href="dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i>首页 / Home</a>
 
                     <?php if ($_SESSION['role'] === 'user'): ?>
-                        <a href="novo_chamado.php" class="menu-item"><i class="fa-solid fa-plus"></i>新呼叫 / Novo Chamado</a>
+                        <a href="novo_chamado.php" class="menu-item active"><i class="fa-solid fa-plus"></i>新呼叫 / Novo Chamado</a>
                     <?php else: ?>
                         <a href="itens-enviados.php" class="menu-item"><i class="fa-solid fa-address-book"></i>发送 / Enviados</a>
                         <a href="lixeira.php" class="menu-item"><i class="fa-solid fa-trash"></i>垃圾桶 / Lixeira</a>
+                        <a href="admin_create_user.php" class="menu-item"><i class="fa-solid fa-user-plus"></i>创建用户 / Criar Usuário</a>
                     <?php endif; ?>
                 </nav>
                 <!-- <div class="flex-icon-dark">

@@ -6,7 +6,6 @@ $ticket_id = $_POST['ticket_id'];
 $comment = $_POST['comment'] ?? null;
 $user_id = $_SESSION['user_id'];
 
-/* SALVA COMENTÁRIO */
 $stmt = $pdo->prepare("
     INSERT INTO ticket_comments (ticket_id, user_id, comentario)
     VALUES (:ticket, :user, :comentario)
@@ -17,7 +16,6 @@ $stmt->execute([
     ':comentario' => $comment
 ]);
 
-/* UPLOAD DO ARQUIVO */
 if (!empty($_FILES['file']['name'])) {
     $allowed = ['png','jpg','jpeg','pdf'];
     $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
