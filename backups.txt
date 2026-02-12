@@ -30,3 +30,18 @@ Ctrl + '	Abre/fecha terminal
 Ctrl + Shift + G	Abre painel Git (ver mudanças)
 Ctrl + S	Salva arquivo atual
 Ctrl + Shift + P	Abre comandos (digite "git")
+
+
+FUTURO PARA VERSÃO 2.0
+
+PRIORIDADE MÉDIA:
+1. CSRF tokens (segurança)
+2. Paginação (performance)
+3. Notificações e-mail
+
+PRIORIDADE BAIXA:
+4. Recuperação de senha
+5. Logs de auditoria
+6. Gráficos no dashboard
+7. Exportar relatórios (PDF/Excel)
+8. Perfil do usuário (editar dados)
