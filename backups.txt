@@ -24,6 +24,22 @@ git diff
 -----------------------------------------------
 -----------------------------------------------
 
+# PARA UM NOVO PROJETO
+git status
+git init
+git add .
+git status
+git commit -m "Primeira versão"
+git remote add origin https://github.com/gabrielalves-crrc/nome-do-projeto.git
+git branch -M main
+git push -u origin main
+
+# PARA ATUALIZAR PROJETO EXISTENTE
+git status
+git add .
+git commit -m "Atualização: [DESCREVA O QUE FEZ]"
+git push
+
 Tecla	O que faz no visual
 
 Ctrl + '	Abre/fecha terminal
